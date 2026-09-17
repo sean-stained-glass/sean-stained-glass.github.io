@@ -706,9 +706,9 @@ const bookendMaterialPromptLibrary = [
       "主体之外只出现木质底座，除彩色主体本身外不出现其他玻璃结构，也不能在主体与木质底座的空隙里补玻璃。主体必须通过自身连续的异形边缘直接贴合、插入或嵌入竖向木板的窄槽，或用底部边缘直接接触横向底脚。连接处要有清楚的黑线包边、真实槽位和接触阴影，不能悬空。主体与木座之间的连接只能由主体自身轮廓和木槽完成。",
   },
   {
-    name: "胡桃木L形书挡底座",
+    name: "书挡底座材质（默认胡桃木，最后材质图优先）",
     prompt:
-      "书挡底座必须是真实的深胡桃木L形结构，由一条明确的竖向木板和一条厚重的横向底脚组成。竖向木板位于主体内侧，高度约为主体的60%至85%，宽度足够承重，不能被省略或只露一小段；横向底脚沿桌面向前延伸，长度接近主体宽度，厚度和重量清楚。木材为暖棕到深棕胡桃木，具有清楚自然木纹、轻微清漆光泽、方正直角、平整底面和真实接触阴影。竖向木板前面必须有一条窄槽或嵌入结构，主体自身连续边缘直接插入或贴合窄槽，主体之外不增加其他玻璃结构。",
+      "没有最后一张书档材质参考图时，书挡底座默认是真实的深胡桃木L形结构，由一条明确的竖向木板和一条厚重的横向底脚组成。竖向木板位于主体内侧，高度约为主体的60%至85%，宽度足够承重，不能被省略或只露一小段；横向底脚沿桌面向前延伸，长度接近主体宽度，厚度和重量清楚。默认木材为暖棕到深棕胡桃木，具有清楚自然木纹、轻微清漆光泽、方正直角、平整底面和真实接触阴影。竖向木板前面必须有一条窄槽或嵌入结构，主体自身连续边缘直接插入或贴合窄槽，主体之外不增加其他玻璃结构。如果用户上传了最后一张书档样式材质参考图，则完全以该参考图的材质、颜色、木纹或表面纹理、厚度、形状、边角、槽位和支撑结构为准，本段胡桃木描述只作为没有材质参考图时的默认值。",
   },
   {
     name: "书本支撑、书脊与控制文字",
@@ -1421,6 +1421,9 @@ const bookendProductRule =
 const bookendFacingOverrideRule =
   "【书挡朝向解释：只允许图案舒展，不允许整体旋转】前面所有“主体朝外展开”“主体朝外”“向外展开”的描述，只表示彩色玻璃图案在玻璃平面内向外舒展，不表示两个书挡整体向外或向内旋转。书挡的木底座和竖板必须始终正面朝前、左右共线、互相平行，像两条平行轨道夹住书本，不能像折叠屏风、V字相框或八字形支架一样有夹角。";
 
+const bookendLastReferenceMaterialRule =
+  "【最后一张图片：书挡样式材质最高优先级】如果用户在主体图之后又上传了一张书档样式材质图，必须把最后一张图片视为书挡底座、木板、支撑结构和表面材质的唯一参考。参考图的材质、颜色、木纹或表面纹理、厚度、边角、槽位、嵌入方式、支撑结构、底座形状、清漆或哑光程度全部优先采用。最后一张材质参考图的优先级高于前面所有默认的深胡桃木、暖棕到深棕、L形底座、固定厚度和固定槽位描述；如果参考图是浅木、原木、漂白木、黑木、灰木、金属、石材或其他真实硬质材料，就按参考图生成，不再套用胡桃木默认值。最后一张图只负责书挡底座和五金，不复制其中的玻璃图案、玻璃颜色、主体造型、背景或构图，玻璃主体仍只来自前面的主体图。左右两个书挡必须使用同一种材质参考并保持左右镜像。若没有上传最后一张材质参考图，才使用默认深胡桃木L形结构。";
+
 const bookendContinuousGlassRule =
   "【书挡完整玻璃连接面与落地要求】彩色主体与竖向木板、横向木板之间必须由同一块连续玻璃轮廓直接连接，不允许只靠一条黑线、细杆、树枝状线条、金属细脚或空白缝隙相连。主体靠近木板的一侧必须自然延伸成大块完整玻璃连接面，连接面与主体共享连续外轮廓和黑线包边，颜色使用主体同色、白色、乳白或浅灰实体玻璃，不能拆成若干零散玻璃片。主体下缘、尾巴或花卉茎叶必须实际接触横向木板上表面，不能悬空；若尾巴或主体边缘靠近横向木板，必须用完整玻璃延长后落在横板上。横向木底座的下表面必须完整贴合桌面，形成连续、真实的接地阴影。横向木板下面不得出现任何木圆柱脚、小木脚、木钉、方脚、垫木、垫片、第二层底木、隐藏支撑或抬高结构；横向木板的底面本身就是唯一接触桌面的最低表面，必须直接平放在桌面上。主体下方不能出现额外的小玻璃脚、零散碎片、悬空细支架或与主体不相连的玻璃件。";
 
@@ -1449,7 +1452,7 @@ const bookendNormalSceneRule =
   "【书档正常背景组】本组采用正常商品环境拍摄，不要强制近景，也不要夸张虚化。相机距离书挡主体约70至130厘米，书挡主体、完整玻璃连接面、竖向木板、横向底脚和书本书脊合计占画面约45%至65%。使用35至70毫米等效焦段，背景保持可辨认但仍低对比，背景虚化约35%至55%。可以让观者看清书桌、书架、窗边、墙面或阅读角的整体氛围，但不要拍成挂链款的房间大远景或远景风光，也不要把书挡缩成画面角落的小物件。";
 
 const bookendMaterialPriorityRule =
-  "【书挡材质与整体性最高优先级】书挡款的彩色主体材质与挂链款完全相同：平面2D彩色玻璃、黑色或深灰哑光外轮廓、连续完整的手工玻璃质感，不改成薄印刷亚克力、透明水晶、果冻或厚玻璃。主体可以有连贯图案线，但必须保持为一个完整玻璃整体，不能被拆成一堆小片，也不能出现随机碎玻璃、碎片、放射状裂纹或散落玻璃渣。主体之外只出现木质底座，除主体本身外不出现其他玻璃结构，连接只能由主体连续边缘直接嵌入木质底座窄槽完成。木质部分必须是暖棕到深棕的实心胡桃木L形书挡，竖向木板与横向底脚都清楚可见，木纹自然、连接真实。";
+  "【书挡材质与整体性最高优先级】书挡款的彩色主体材质与挂链款完全相同：平面2D彩色玻璃、黑色或深灰哑光外轮廓、连续完整的手工玻璃质感，不改成薄印刷亚克力、透明水晶、果冻或厚玻璃。主体可以有连贯图案线，但必须保持为一个完整玻璃整体，不能被拆成一堆小片，也不能出现随机碎玻璃、碎片、放射状裂纹或散落玻璃渣。主体之外只出现木质底座，除主体本身外不出现其他玻璃结构，连接只能由主体连续边缘直接嵌入木质底座窄槽完成。没有最后一张书档材质参考图时，木质部分默认是暖棕到深棕的实心胡桃木L形书挡，竖向木板与横向底脚都清楚可见，木纹自然、连接真实；一旦上传最后一张材质参考图，则以该参考图为准。";
 
 function isBookendProduct() {
   return currentProductType === "bookend";
@@ -1467,39 +1470,39 @@ function buildBookendImageMappingRule() {
   if (hasLeft && hasRight && !isSymmetric) {
     const leftName = bookendFileNames.left || "左书挡图片";
     const rightName = bookendFileNames.right || "右书挡图片";
-    return `【书挡图片对应关系：左右不同】图一必须是${leftName}，用于左侧书挡玻璃主体；图二必须是${rightName}，用于右侧书挡玻璃主体。两张图片必须分别保留各自主体的识别锚点，不能交换左右、不能把两张混成一个图案、不能强行镜像、不能只使用其中一张。左右书挡仅在木质底座结构、玻璃材质、铅线工艺、光线和场景上保持统一，主体图案与颜色可以不同。忽略材质规则中“图二是材质参考”的旧编号；材质只按文字要求执行，只有额外上传材质图时才放在图三，额外背景图放在图四。`;
+    return `【书挡图片对应关系：左右不同】图一必须是${leftName}，用于左侧书挡玻璃主体；图二必须是${rightName}，用于右侧书挡玻璃主体。两张图片必须分别保留各自主体的识别锚点，不能交换左右、不能把两张混成一个图案、不能强行镜像、不能只使用其中一张。如果用户还上传了最后一张书档样式材质图，则该最后一张图片是唯一书挡底座材质参考；它只决定书挡底座和五金的材质、颜色、纹理、厚度、形状、边角、槽位和支撑方式，不能复制其中的玻璃图案、玻璃颜色、主体造型、背景或构图，也不能把它当作第三个书挡主体。若还需要背景参考图，请把背景图放在材质参考图之前，最后一张始终固定为材质参考。左右书挡仅在书挡材质参考、玻璃材质、铅线工艺、光线和场景上保持统一，主体图案与颜色可以不同。`;
   }
 
-  return `【书挡图片对应关系：默认镜像对称】当前两张主体图相同，或只上传了一张。系统必须默认生成一对左右镜像书挡，两块玻璃面板共享同一主体、同一颜色和同一玻璃工艺，只在左右方向做自然镜像；可以做轻微局部变化，但不能变成两个无关主体。若图中主体本身不适合机械镜像，则保持左右版式、底座和书本关系对称。此时图一是唯一主体参考，图二可作材质参考，图三可作背景参考；若没有额外参考图，则完全按文字规则生成。${bookendMirrorSymmetryRule}`;
+  return `【书挡图片对应关系：默认镜像对称】当前两张主体图相同，或只上传了一张。系统必须默认生成一对左右镜像书挡，两块玻璃面板共享同一主体、同一颜色和同一玻璃工艺，只在左右方向做自然镜像；可以做轻微局部变化，但不能变成两个无关主体。若图中主体本身不适合机械镜像，则保持左右版式、底座和书本关系对称。此时图一是唯一主体参考；如果用户额外上传了最后一张书档样式材质图，则该最后一张图片是唯一书挡底座材质参考，只决定书挡底座和五金的材质、颜色、纹理、厚度、形状、边角、槽位和支撑方式，不复制其中的玻璃图案、玻璃颜色、主体造型、背景或构图，也不能把它当作第三只书挡或替换主体。若还需要背景参考图，请把背景图放在材质参考图之前，最后一张始终固定为材质参考。若没有最后一张材质参考图，则完全按文字规则生成。${bookendMirrorSymmetryRule}`;
 }
 
 function getProductStructureRule() {
   return isBookendProduct()
-    ? `${bookendProductRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}${bookendStraightAlignmentRule}${buildBookendImageMappingRule()}`
+    ? `${bookendProductRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}${bookendStraightAlignmentRule}${buildBookendImageMappingRule()}`
     : chainLengthSeparationRule;
 }
 
 function getSceneSubjectLockRule() {
   return isBookendProduct()
-    ? `${bookendSceneSubjectLockRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneSubjectLockRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneSubjectLockRule;
 }
 
 function getSceneThreeImageRule() {
   return isBookendProduct()
-    ? `${bookendSceneThreeImageRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneThreeImageRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneThreeImageRule;
 }
 
 function getScenePlacementRule() {
   return isBookendProduct()
-    ? `${bookendScenePlacementRule}${bookendFacingOverrideRule}`
+    ? `${bookendScenePlacementRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}`
     : scenePlacementRule;
 }
 
 function getSceneNegativeRule() {
   return isBookendProduct()
-    ? `${bookendSceneNegativeRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneNegativeRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneNegativeRule;
 }
 
@@ -1511,7 +1514,7 @@ function getBookendCaptureModeRule(index) {
 }
 
 function getProductMaterialPriorityRule() {
-  return isBookendProduct() ? bookendMaterialPriorityRule : "";
+  return isBookendProduct() ? `${bookendMaterialPriorityRule}${bookendLastReferenceMaterialRule}` : "";
 }
 
 const elements = {
