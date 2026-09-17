@@ -953,6 +953,11 @@ const etsyShopStyleProfiles = {
     prompt:
       "【店铺视觉风格：高饱和重彩玻璃】这套风格的核心是颜色重、颜料密度高、饱和度高、明暗反差强，而不是浅淡粉彩。每个主要色区都要有同色系内部层次，例如深森林绿到祖母绿再到橄榄绿，宝石蓝到青蓝再到浅海蓝，酒红到深红再到珊瑚红，琥珀到金橙再到暖黄。主色必须浓郁、丰满、有重量感，背光时颜色更亮更透，但不能被洗白。相邻区域要使用明确的冷暖、互补或深浅对比，让画面有珠宝般、厚重、华丽的彩色玻璃感。允许黑色或深灰铅线加少量古铜金或暗金线条强化轮廓。禁止整体粉灰、低饱和、发白、雾蒙蒙、水彩、普通平面填色或只有黑色和白色的大块区域；禁止霓虹和 HDR，但高饱和与深色必须同时保留。",
   },
+  FlowWizardHat: {
+    name: "魔法帽高饱和彩虹玻璃",
+    prompt:
+      "【店铺视觉风格：魔法帽高饱和彩虹玻璃】这套风格来自 Google Flow 魔法帽彩色玻璃参考：颜色必须像彩色玻璃本身一样高饱和、明亮、有颜料密度，采用皇家蓝、紫罗兰、兰花洋红、琥珀金、焦糖橙、祖母绿、春芽绿和电光青蓝的大胆对比。主色要有同色系深浅层次，例如深蓝到钴蓝再到电光青蓝，深紫到亮紫再到兰花洋红，深绿到祖母绿再到春芽绿，琥珀到金橙再到浅金蜜黄。禁止把颜色压成粉灰、暗沉、低饱和或水彩；深色保留色相，浅色保留色彩倾向。允许背光增强通透感和亮度，但不能过曝成白色，也不能变成霓虹 HDR。黑色或深灰哑光铅线负责分割，整体保持平面 2D 彩色玻璃。",
+  },
 };
 
 const etsyShopColorPalettes = [
@@ -1130,6 +1135,47 @@ const etsyShopColorPalettes = [
   return variable;
 });
 
+const flowColorPalettes = [
+  {
+    id: "flow-wizard-hat",
+    source: "Google Flow",
+    name: "魔法帽彩虹玻璃",
+    swatches: [
+      "#133FDF",
+      "#ECA929",
+      "#279D32",
+      "#78129F",
+      "#CA5F1D",
+      "#439EDD",
+      "#AE4CCC",
+      "#92DE40",
+      "#480D6F",
+      "#F3D365",
+    ],
+    labels: [
+      "皇家蓝",
+      "琥珀金",
+      "祖母绿",
+      "亮紫水晶",
+      "焦糖橙",
+      "电光青蓝",
+      "兰花洋红",
+      "春芽绿",
+      "深紫罗兰",
+      "浅金蜜黄",
+    ],
+  },
+].map((palette) => {
+  const styleProfile = etsyShopStyleProfiles.FlowWizardHat;
+  const variable = {
+    ...palette,
+    styleName: styleProfile?.name || "",
+    description: `${styleProfile?.name || "Google Flow"}｜${palette.labels.join("、")}`,
+  };
+  variable.prompt = buildEtsyShopPalettePrompt(variable);
+  return variable;
+});
+
 const colorVariableLibrary = {
   lightcove: [
     {
@@ -1245,6 +1291,7 @@ const colorVariableLibrary = {
   ],
   pinterest: pinterestColorPalettes,
   etsyShops: etsyShopColorPalettes,
+  flow: flowColorPalettes,
 };
 
 const shapeVariableLibrary = {
@@ -2679,6 +2726,9 @@ function getEtsyShopStyleProfile(variable) {
   if (variable?.id?.startsWith("sovelle-")) {
     return etsyShopStyleProfiles.SovelleStainedglass;
   }
+  if (variable?.id?.startsWith("flow-")) {
+    return etsyShopStyleProfiles.FlowWizardHat;
+  }
   return null;
 }
 
@@ -2697,8 +2747,12 @@ function buildEtsyShopPalettePrompt({ id, source, swatches, labels }) {
     (hex, index) => `${labels?.[index] || colorNameFromHex(hex)} ${hex}`,
   );
   const styleProfile = getEtsyShopStyleProfile({ id });
+  const sourceLabel =
+    source === "Google Flow"
+      ? "Google Flow 参考图中"
+      : `${source}店铺商品图中`;
   return [
-    `严格使用从${source}店铺商品图中归纳的这组配色：${colorEntries.join("、")}。`,
+    `严格使用从${sourceLabel}归纳的这组配色：${colorEntries.join("、")}。`,
     "第1色为主色，占约42%至52%；第2色为辅助色，占约23%至30%；第3色为结构色，占约12%至18%；其余颜色只作局部点缀和玻璃拼片。",
     "所有色块保持高饱和、实体、浓郁的传统彩色玻璃质感，颜色之间要有明确的面积主次和连贯大色区分区，不能平均铺色，也不能加入未列出的彩色色相。",
     "深色必须保留清楚色相和中间明度，不能压成纯黑；浅色必须保留明确颜色倾向，不能过曝成纯白。黑色和深灰只作为哑光焊铅线，白色和乳白只作为负形、花瓣、高光或真实存在的白色玻璃。",
@@ -2713,7 +2767,9 @@ function isPinterestPalette(variable) {
 
 function isEtsyShopPalette(variable) {
   return Boolean(
-    variable?.id?.startsWith("nmk-") || variable?.id?.startsWith("sovelle-"),
+    variable?.id?.startsWith("nmk-") ||
+      variable?.id?.startsWith("sovelle-") ||
+      variable?.id?.startsWith("flow-"),
   );
 }
 
@@ -2842,6 +2898,7 @@ function allColorVariables() {
     ...colorVariableLibrary.sunart,
     ...colorVariableLibrary.pinterest,
     ...colorVariableLibrary.etsyShops,
+    ...colorVariableLibrary.flow,
   ];
 }
 
@@ -2993,6 +3050,25 @@ function populateEtsyShopColorOptions() {
   optgroup.label = "Etsy 店铺色彩（银河炫彩 / 颜色鲜艳饱和度很高）";
   optgroup.dataset.source = "etsy-shops";
   for (const palette of colorVariableLibrary.etsyShops) {
+    const option = document.createElement("option");
+    option.value = palette.id;
+    option.textContent = `${palette.source} · ${palette.name}`;
+    optgroup.appendChild(option);
+  }
+  elements.colorVariableSelect.appendChild(optgroup);
+}
+
+function populateFlowColorOptions() {
+  if (
+    !elements.colorVariableSelect ||
+    elements.colorVariableSelect.querySelector('optgroup[data-source="google-flow"]')
+  ) {
+    return;
+  }
+  const optgroup = document.createElement("optgroup");
+  optgroup.label = "Google Flow 精选（魔法帽高饱和彩虹）";
+  optgroup.dataset.source = "google-flow";
+  for (const palette of colorVariableLibrary.flow) {
     const option = document.createElement("option");
     option.value = palette.id;
     option.textContent = `${palette.source} · ${palette.name}`;
@@ -3797,6 +3873,7 @@ bindEvents();
 addPanelStickers();
 populatePinterestColorOptions();
 populateEtsyShopColorOptions();
+populateFlowColorOptions();
 renderProductUploadMode();
 renderLibrary();
 loadBackgroundBatchRules();
