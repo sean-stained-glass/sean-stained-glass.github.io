@@ -722,6 +722,34 @@ const bookendMaterialPromptLibrary = [
   },
 ];
 
+const materialReplacementPromptLibrary = [
+  {
+    name: "任意物体玻璃材质替换总控",
+    prompt:
+      "图一是唯一物体外形基准，最后一张图是唯一玻璃材质参考。完整保留图一物体的外形、轮廓、比例、结构、视角、姿势、遮挡关系和裁切范围，只把物体的可见表面、内部填充、留白和原本透明的区域替换为传统手工彩色玻璃材质。最后一张图负责提供玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，但不复制其中的主体、轮廓、背景或构图。不要自动添加挂链、吊环、书挡、木质底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外玻璃结构。物体原本就有的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。",
+  },
+  {
+    name: "任意物体表面与透明区域填充",
+    prompt:
+      "只改变材质，不改变物体身份。平面物体继续保持平面薄片结构；立体物体保留原有体积、边缘、转折和透视，只让可见表面表现为实体彩色玻璃，不要给物体增加额外透明厚度或水晶轮廓。原图透明、空白、镂空、负形和浅色区域，全部改成白色、乳白、象牙白、浅灰或实体粉彩玻璃，不能让背景从空洞中直接透出。颜色分区可以跟随最后一张材质参考图，但所有拼片必须归属于物体原有轮廓，不能把物体拆成一堆散落碎片。",
+  },
+  {
+    name: "铅线、玻璃分片与材质边界",
+    prompt:
+      "使用黑色或深灰哑光铅线包住物体边缘和主要颜色分区，线条连续、贴合表面、像传统铅条镶嵌工艺。允许出现大块连续玻璃和少量自然小拼片，但不能把小拼片做成随机三角形、碎玻璃、放射状裂片、散落玻璃渣或马赛克碎裂感。玻璃表面保持哑光或轻微磨砂，颜色浓郁、实体、有颜料密度；不能变成整件透明玻璃、镜面玻璃、水晶切面、宝石、冰晶、树脂、亚克力、果冻或软糖。",
+  },
+  {
+    name: "任意物体原有结构与五金保留",
+    prompt:
+      "严格保留图一物体的识别锚点、功能结构、开口、边缘、接缝、遮挡和支撑方式。相机、杯子、盒子、玩具、摆件、相框、花朵、动物或任何其他物体都不能因为材质替换而改变类别，也不能被重新设计成另一件产品。物体原本存在的金属、木材、布料、陶瓷、塑料或纸制配件保持各自原始材质；只有需要替换的实体表面变为彩色玻璃。不要新增挂链、底座、外框、托盘、透明背板或其他不存在的结构。",
+  },
+  {
+    name: "任意物体商品摄影与负面要求",
+    prompt:
+      "真实相机实拍，主体边缘清晰，背景低对比并适当虚化。重点展示物体原形、玻璃色块、材质分片、铅线、磨砂表面和真实光影。物体的影子、桌面投影和倒影必须带玻璃本身的颜色，不能是纯黑死影。不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和 3D 玻璃雕刻；不要增加挂链、书挡、木底座、透明边框或第二主体。",
+  },
+];
+
 const abstractSubjectPromptLibrary = [
   {
     name: "提取精神锚点",
@@ -1361,6 +1389,18 @@ const bookendSelectionPrompt = `请从本轮生成的三张照片中选择一张
 const materialReferenceRule =
   "图一为唯一主体，图二为唯一材质与五金参考，图三为唯一背景参考。严格提取图二的传统手工彩色玻璃：薄平板玻璃、哑光或轻微磨砂表面、乳白粉彩或实体色块、较粗的黑色深灰哑光铅线、连续完整的主体轮廓、连贯的色区包边和真实焊点，窗光只让颜色略亮，不产生透明感。主体必须有清楚的大块颜色分区，但不能被切成大量独立小玻璃片、尖角三角形或随机碎块。主体轮廓内原本会透明、留白或露出背景的区域，全部用白色、乳白、象牙白或浅灰实体磨砂玻璃替代，不能出现透明空洞。图二还负责提供挂链、吊线、顶部圆环和连接五金的形式，但挂链数量以产品类型和图一为最高优先级：图一有两条时严格保留两条，图一只有一条时保持一条；若图一没有挂链，但本轮属于挂饰、Suncatcher、墙面悬挂装饰或悬挂商品摄影，则默认补齐两条独立、加长、全程分开的链条；若本轮明确是书挡、摆件、桌面装饰或用户要求不要挂链，则不添加。图二、图三和背景图中的挂链数量不得覆盖上述规则，不得增加背链、侧链、备用链、装饰链、圆环串联或额外金属线。若最终确定有两条挂链，必须把两条链明显加长并保持全程分开，不能交叉、并线、缠绕、共用圆环或汇合连接。挂链必须完整、断开处不能消失、不能悬空。不复制图二的玻璃形状、颜色和构图；只提取图三的空间、道具、光线和背景，不复制图三中的主体。不能生成水晶、冰晶、宝石、琉璃摆件、透明树脂、亚克力、珐琅画、果冻、软糖、玻璃砖、厚玻璃或 3D 玻璃雕刻，不要玻璃镜面高光、边缘发光、内部发光、色散、彩虹折射和整件透明。";
 
+const materialReplacementSelectionPrompt = `请从本轮生成的三张照片中选择一张作为后续唯一基准图。
+
+优先选择“同一个任意物体只替换了表面材质”的效果最准确的一张。物体必须仍然一眼可认出，原始外形、轮廓、结构、比例、视角、姿势、遮挡关系、裁切范围和可见部件必须保持不变，不能因为换材质而变成另一种物体。
+
+材质验收：最后一张材质参考图必须成为唯一玻璃材质来源。提取它的玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，并映射到图一物体的可见表面与内部填充区域。不能复制参考图中的主体、轮廓、背景或具体构图。
+
+结构验收：不得自动增加挂链、吊环、书挡、木底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外产品结构。物体原本就有的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。若物体原本透明或镂空，改成白色、乳白、象牙白、浅灰或实体彩色玻璃，不能留下透明空洞。
+
+材质失败项：水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和 3D 玻璃雕刻均判定为失败。
+
+选定后，后续所有生成必须以这张照片为唯一锚点，严格冻结物体外形、结构、比例、姿势、视角、遮挡关系、裁切范围和玻璃材质风格。后续只允许改变背景、道具、光线、机位和构图，不允许重新设计物体，不允许改变物体类别，不允许新增挂链、底座或外框。`;
+
 const subjectCompositionRule =
   "构图与身体范围严格以图一为准：图一显示到哪里，结果就只显示到哪里。若图一是头像、胸像、半身雕塑或只到胸部、肩部，结果必须保持相同范围，不得自行补出腹部、腰、胯、腿、脚或更长的身体，不得把胸像扩成半身像、七分身或全身像。主体最下方要有服饰收口、布料折返、雕塑底座、轮廓闭合或可见背景留白来完成收尾，不能平直截断在画面边缘，不能继续向画布下方延伸，不能看起来还能继续扩图。保持图一相同的镜头距离、裁切比例、主体占比和位置，不改变现有可见的主体内容。";
 
@@ -1454,8 +1494,30 @@ const bookendNormalSceneRule =
 const bookendMaterialPriorityRule =
   "【书挡材质与整体性最高优先级】书挡款的彩色主体材质与挂链款完全相同：平面2D彩色玻璃、黑色或深灰哑光外轮廓、连续完整的手工玻璃质感，不改成薄印刷亚克力、透明水晶、果冻或厚玻璃。主体可以有连贯图案线，但必须保持为一个完整玻璃整体，不能被拆成一堆小片，也不能出现随机碎玻璃、碎片、放射状裂纹或散落玻璃渣。主体之外只出现木质底座，除主体本身外不出现其他玻璃结构，连接只能由主体连续边缘直接嵌入木质底座窄槽完成。没有最后一张书档材质参考图时，木质部分默认是暖棕到深棕的实心胡桃木L形书挡，竖向木板与横向底脚都清楚可见，木纹自然、连接真实；一旦上传最后一张材质参考图，则以该参考图为准。";
 
+const materialReplacementProductRule =
+  "【产品款式最高优先级：通用玻璃材质替换】本轮不是挂链款，也不是书挡款。图一是唯一物体外形基准，最后一张图是唯一玻璃材质参考。必须完整保留图一任意物体的外形、轮廓、比例、结构、视角、姿势、遮挡关系、裁切范围和功能部件，只把物体的实体表面、内部填充、空白和原本透明区域替换为传统手工彩色玻璃材质。最后一张材质参考图决定玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，但不复制其中的主体、轮廓、背景或具体构图。若还需要背景参考图，请把背景图放在材质参考图之前，最后一张始终固定为材质参考。严禁自动增加挂链、吊绳、吊环、书挡、木质底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外玻璃结构。物体原本存在的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。";
+
+const materialReplacementSubjectLockRule =
+  "以图一任意物体为唯一主体，严格保持它的物体类别、外形、轮廓、比例、结构、姿势、视角、裁切、遮挡关系、识别特征、功能部件、原有五金和原始配件不变。只允许改变实体表面与内部填充的材质，不允许改变物体几何结构，不允许把它重新设计成动物、人物、挂饰、书挡、摆件或另一件商品。";
+
+const materialReplacementThreeImageRule =
+  "请生成本场景的3张独立图片，不要拼图。三张必须保持同一物体、同一外形结构、同一视角范围、同一玻璃材质风格和同一背景场景；只允许在机位微调、景别、焦点、光线方向和道具位置中做轻微变化。三张都必须表现为同一个物体完成玻璃材质替换，不能改变物体类别、轮廓、比例、姿势或可见部件。";
+
+const materialReplacementPlacementRule =
+  "【通用材质替换场景摆放】不强制把物体改成悬挂、书挡或桌面摆件。物体沿用它原本合理的支撑和展示方式：原图能站立就自然站立，能手持就手持，平放就平放，有支架就继续使用原支架，有底座就保留原底座。场景只负责选择真实环境、光线和机位，不能为了场景需要新增挂链、吊环、支撑杆、透明背板、整圈边框或其他不存在的结构。物体必须有真实接触阴影，不能悬空。";
+
+const materialReplacementNegativeRule =
+  "不要改变物体类别、外形、轮廓、比例、结构、姿势、视角、裁切、遮挡关系和功能部件；不要增加挂链、吊绳、吊环、挂钩、书挡、木质底座、托盘、支架、外框、透明背板或整圈玻璃边框；不要新增第二主体；不要复制材质参考图的物体、背景和构图；不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和3D玻璃雕刻；不要文字、水印、拼图或复杂背景。";
+
+const materialReplacementColorRule =
+  "【颜色以最后一张材质参考图为准】图一物体原颜色不作为限制。最后一张材质参考图是唯一玻璃颜色、拼片大小、纹理、透光度、磨砂程度和铅线风格来源。允许彻底改变物体原来的颜色体系，但颜色必须保持高饱和、浓郁、实体、有玻璃颜料密度。若本轮另外选择了色彩变量，则色彩变量优先于材质参考图的颜色，但材质参考图的玻璃拼片、表面纹理、透光程度和铅线工艺仍必须保留。";
+
 function isBookendProduct() {
   return currentProductType === "bookend";
+}
+
+function isMaterialReplacementProduct() {
+  return currentProductType === "material";
 }
 
 function buildBookendImageMappingRule() {
@@ -1477,30 +1539,35 @@ function buildBookendImageMappingRule() {
 }
 
 function getProductStructureRule() {
+  if (isMaterialReplacementProduct()) return materialReplacementProductRule;
   return isBookendProduct()
     ? `${bookendProductRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}${bookendStraightAlignmentRule}${buildBookendImageMappingRule()}`
     : chainLengthSeparationRule;
 }
 
 function getSceneSubjectLockRule() {
+  if (isMaterialReplacementProduct()) return materialReplacementSubjectLockRule;
   return isBookendProduct()
     ? `${bookendSceneSubjectLockRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneSubjectLockRule;
 }
 
 function getSceneThreeImageRule() {
+  if (isMaterialReplacementProduct()) return materialReplacementThreeImageRule;
   return isBookendProduct()
     ? `${bookendSceneThreeImageRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneThreeImageRule;
 }
 
 function getScenePlacementRule() {
+  if (isMaterialReplacementProduct()) return materialReplacementPlacementRule;
   return isBookendProduct()
     ? `${bookendScenePlacementRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}`
     : scenePlacementRule;
 }
 
 function getSceneNegativeRule() {
+  if (isMaterialReplacementProduct()) return materialReplacementNegativeRule;
   return isBookendProduct()
     ? `${bookendSceneNegativeRule}${bookendFacingOverrideRule}${bookendLastReferenceMaterialRule}${bookendContinuousGlassRule}`
     : sceneNegativeRule;
@@ -1514,6 +1581,9 @@ function getBookendCaptureModeRule(index) {
 }
 
 function getProductMaterialPriorityRule() {
+  if (isMaterialReplacementProduct()) {
+    return `${materialReplacementProductRule}${materialReplacementPromptLibrary[0].prompt}`;
+  }
   return isBookendProduct() ? `${bookendMaterialPriorityRule}${bookendLastReferenceMaterialRule}` : "";
 }
 
@@ -2322,6 +2392,96 @@ function selectBackgrounds(
   return shuffled.slice(0, Math.min(7, shuffled.length));
 }
 
+const materialReplacementAngles = [
+  {
+    slotId: "hero",
+    slotName: "正面主视觉",
+    text: "相机与物体中心同高，正面平视，85mm商品镜头。",
+    composition: "物体完整居中，占画面约45%，背景保留负空间，不增加挂链、底座或外框。",
+  },
+  {
+    slotId: "top",
+    slotName: "高角度俯拍",
+    text: "相机位于物体右上方约25度，50mm镜头向下拍摄。",
+    composition: "完整显示物体顶部、表面玻璃分区和原有结构，背景低对比。",
+  },
+  {
+    slotId: "low",
+    slotName: "低角度仰拍",
+    text: "相机低于物体中心约15度，50mm镜头轻微仰拍。",
+    composition: "物体保持原比例和原支撑方式，不能悬空，不新增不存在的底脚。",
+  },
+  {
+    slotId: "macro",
+    slotName: "材质近景微距",
+    text: "100mm微距近景，焦点落在玻璃分片、铅线、磨砂表面和物体原有边缘。",
+    composition: "允许轻微裁切，但必须保留物体类别和关键结构，背景完全虚化。",
+  },
+  {
+    slotId: "hand",
+    slotName: "手持托持展示",
+    text: "一只手从画面侧边进入，只轻轻托住物体底部或原有把手，不增加挂链或吊绳。",
+    composition: "手部只占小面积，不遮挡物体识别结构，物体必须有真实支撑和接触阴影。",
+  },
+  {
+    slotId: "light",
+    slotName: "光影与倒影",
+    text: "相机正面或侧前方约30度，使用侧后方自然光，让物体表面玻璃色块和原有轮廓清楚。",
+    composition: "影子、桌面投影和倒影带玻璃本身颜色，不能是纯黑死影，也不能盖过物体。",
+  },
+  {
+    slotId: "wide",
+    slotName: "环境三分线",
+    text: "35mm或50mm环境镜头，物体位于左侧或右侧三分线。",
+    composition: "另一侧保留环境空间，背景有前中后景层次，物体保持原始展示方式。",
+  },
+];
+
+const materialReplacementShootingStyles = [
+  {
+    id: "material-natural",
+    name: "自然光材质展示",
+    text: "中长焦自然光实拍，物体占画面约40%至55%，表面玻璃分区、铅线和原有结构清楚，背景自然虚化。",
+    composition: "物体居中或轻微偏离中心，保留完整轮廓和真实接触阴影。",
+  },
+  {
+    id: "material-window",
+    name: "窗边侧光材质",
+    text: "正面或侧前方15至30度，自然侧光照亮玻璃表面，物体保持原展示方式，不改成悬挂。",
+    composition: "窗边道具只作低对比陪衬，不能遮挡物体识别结构。",
+  },
+  {
+    id: "material-garden",
+    name: "户外自然侧光",
+    text: "使用方向明确的自然侧光，背景为虚化花园、植物或户外空间，物体仍保持原始支撑方式。",
+    composition: "物体位于中央或三分线，轮廓完整，不能悬空或新增不存在的支架。",
+  },
+  {
+    id: "material-macro",
+    name: "近景材质微距",
+    text: "100mm微距感近景，焦点落在玻璃色块、铅线、磨砂颗粒和物体原有边缘。",
+    composition: "允许轻微裁切，但必须保留物体类别和关键识别特征。",
+  },
+  {
+    id: "material-backlit",
+    name: "柔和背光材质",
+    text: "背景明亮，物体受到柔和背光或侧逆光，玻璃保持实体颜色和有限透光，不能过曝成透明水晶。",
+    composition: "物体完整清楚，不使用边缘发光、彩虹折射或内部发光。",
+  },
+  {
+    id: "material-warm-bokeh",
+    name: "季节暖光散景",
+    text: "50至85mm中长焦，暖色自然光或柔和环境灯，背景形成低对比暖色散景。",
+    composition: "暖光只作背景氛围，不能改变物体材质导致发灰、粉白或透明。",
+  },
+  {
+    id: "material-environment",
+    name: "环境空间展示",
+    text: "35至50mm环境镜头，物体占画面约25%至35%，背景保留可辨认但低对比的前中后景。",
+    composition: "物体放在合理位置并使用原有支撑方式，不能被家具或植物遮挡。",
+  },
+];
+
 function selectAngles(analysis, random) {
   return angleSlots.map((slot) => {
     const preferred =
@@ -2339,6 +2499,24 @@ function selectShootingStyles(random) {
     [styles[index], styles[swapIndex]] = [styles[swapIndex], styles[index]];
   }
   return styles.slice(0, Math.min(7, styles.length));
+}
+
+function selectMaterialReplacementAngles(random) {
+  const angles = [...materialReplacementAngles];
+  for (let index = angles.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [angles[index], angles[swapIndex]] = [angles[swapIndex], angles[index]];
+  }
+  return angles.slice(0, 7);
+}
+
+function selectMaterialReplacementShootingStyles(random) {
+  const styles = [...materialReplacementShootingStyles];
+  for (let index = styles.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [styles[index], styles[swapIndex]] = [styles[swapIndex], styles[index]];
+  }
+  return styles.slice(0, 7);
 }
 
 function getBookendAngleText(angle) {
@@ -2468,7 +2646,9 @@ function buildPrompt(analysis, background, angle, timeOfDay, shootingStyle, inde
     "",
     getProductMaterialPriorityRule(),
     "",
-    strictColorPreservationRule,
+    isMaterialReplacementProduct()
+      ? materialReplacementColorRule
+      : strictColorPreservationRule,
     "",
     vividnessPriorityRule,
     "",
@@ -2526,7 +2706,9 @@ function buildBatchPrompt() {
     coloredShadowRule,
     vividGlassColorRule,
     getProductMaterialPriorityRule(),
-    strictColorPreservationRule,
+    isMaterialReplacementProduct()
+      ? materialReplacementColorRule
+      : strictColorPreservationRule,
     vividnessPriorityRule,
     buildEtsyShopStylePriorityRule(getColorVariable()),
     getSceneNegativeRule(),
@@ -2535,9 +2717,11 @@ function buildBatchPrompt() {
     currentResults.map((result, index) => buildSceneBrief(result, index)).join("\n\n"),
     "",
     batch.closing ||
-      (isBookendProduct()
-        ? "七组必须使用同一套书挡主体、同一玻璃材质、同一木质底座结构和同一左右对应关系，只改变书架场景、书本、道具、光线、机位与构图，绝不能出现挂链。每组都必须输出3张独立图片，不要拼图，不要少生成。"
-        : "七组必须使用同一主体、同一彩色玻璃材质和同一挂链数量，只改变场景、道具、光线、机位与构图。每组都必须输出 3 张独立图片，不要拼图，不要少生成。"),
+      (isMaterialReplacementProduct()
+        ? "七组必须使用同一任意物体、同一外形结构、同一玻璃材质风格和同一原始支撑方式，只改变背景、道具、光线、机位与构图。不要新增挂链、书挡、底座、外框、透明背板或其他不存在的结构。每组都必须输出3张独立图片，不要拼图，不要少生成。"
+        : isBookendProduct()
+          ? "七组必须使用同一套书挡主体、同一玻璃材质、同一木质底座结构和同一左右对应关系，只改变书架场景、书本、道具、光线、机位与构图，绝不能出现挂链。每组都必须输出3张独立图片，不要拼图，不要少生成。"
+          : "七组必须使用同一主体、同一彩色玻璃材质和同一挂链数量，只改变场景、道具、光线、机位与构图。每组都必须输出 3 张独立图片，不要拼图，不要少生成。"),
   ].join("\n");
 }
 
@@ -3268,6 +3452,33 @@ function renderSubjectLibrary() {
     prompt.replace(/\s*生成3张差异明显的方案，每张都单独输出。/g, "").replace(/\s*生成3张。/g, "");
   const colorVariable = getColorVariable();
   const shapeVariable = getShapeVariable();
+
+  if (isMaterialReplacementProduct()) {
+    elements.subjectModeSelect.disabled = true;
+    elements.shapeVariableSelect.disabled = true;
+    elements.randomShapeButton.disabled = true;
+    elements.shapeVariableDescription.textContent =
+      "通用材质替换模式锁定任意物体外形与结构，只替换玻璃材质，不启用主体重构和形状变量。";
+    elements.subjectPromptBox.value = formatPromptGroup(
+      "通用玻璃材质替换提示词",
+      [
+        {
+          name: "任意物体外形与结构锁定",
+          prompt: materialReplacementSubjectLockRule,
+        },
+      ],
+      [
+        "本轮总共只生成3张照片。以下所有要求一次应用于这3张照片，不要按照每一条提示词分别再生成3张。",
+        squareImageRatioRule,
+        getProductStructureRule(),
+        materialReplacementColorRule,
+      ].join("\n\n"),
+    );
+    renderColorVariablePreview();
+    return;
+  }
+
+  elements.subjectModeSelect.disabled = false;
   const isAbstractMode = currentSubjectTransformMode === "abstract";
   const shapeVariableEnabled = currentSubjectTransformMode !== "preserve";
   const baseSubjectItems = isAbstractMode
@@ -3311,17 +3522,23 @@ function renderMaterialLibrary() {
   const stripSinglePromptCounts = (prompt) =>
     prompt.replace(/\s*生成3张差异明显的方案，每张都单独输出。/g, "").replace(/\s*生成3张。/g, "");
   const colorVariable = getColorVariable();
-  const materialItems = isBookendProduct()
-    ? bookendMaterialPromptLibrary
+  const materialItems = isMaterialReplacementProduct()
+    ? materialReplacementPromptLibrary
+    : isBookendProduct()
+      ? bookendMaterialPromptLibrary
+      : colorVariable
+        ? promptLibrary.material
+        : promptLibrary.material.filter((item) => item.name !== "高饱和玻璃颜色");
+  const materialBaseRule = isMaterialReplacementProduct()
+    ? materialReplacementProductRule
+    : isBookendProduct()
+      ? bookendContinuousGlassRule
+      : materialReferenceRule;
+  const colorGuidance = isMaterialReplacementProduct()
+    ? materialReplacementColorRule
     : colorVariable
-      ? promptLibrary.material
-      : promptLibrary.material.filter((item) => item.name !== "高饱和玻璃颜色");
-  const materialBaseRule = isBookendProduct()
-    ? bookendContinuousGlassRule
-    : materialReferenceRule;
-  const colorGuidance = colorVariable
-    ? buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false })
-    : strictColorPreservationRule;
+      ? buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false })
+      : strictColorPreservationRule;
   const colorStyleRule = vividGlassColorRule;
 
   elements.materialPromptBox.value = formatPromptGroup(
@@ -3343,9 +3560,14 @@ function renderMaterialLibrary() {
 
 function renderSelectionPrompt() {
   const colorVariable = getColorVariable();
-  const baseSelectionPrompt = isBookendProduct()
-    ? bookendSelectionPrompt
-    : selectionPrompt;
+  const baseSelectionPrompt = isMaterialReplacementProduct()
+    ? materialReplacementSelectionPrompt
+    : isBookendProduct()
+      ? bookendSelectionPrompt
+      : selectionPrompt;
+  const colorRule = isMaterialReplacementProduct()
+    ? materialReplacementColorRule
+    : strictColorPreservationRule;
   elements.selectionPromptBox.value = `${baseSelectionPrompt}
 
 ${squareImageRatioRule}
@@ -3354,7 +3576,7 @@ ${singleLayerOcclusionRule}
 
 ${vividGlassColorRule}
 
-${strictColorPreservationRule}
+${colorRule}
 
 ${vividnessPriorityRule}
 
@@ -3393,8 +3615,12 @@ function generateResults({ avoidPreviousRound = false } = {}) {
     excludedFingerprints,
     sceneLibrary,
   );
-  const selectedAngles = selectAngles(currentAnalysis, random);
-  const selectedShootingStyles = selectShootingStyles(random);
+  const selectedAngles = isMaterialReplacementProduct()
+    ? selectMaterialReplacementAngles(random)
+    : selectAngles(currentAnalysis, random);
+  const selectedShootingStyles = isMaterialReplacementProduct()
+    ? selectMaterialReplacementShootingStyles(random)
+    : selectShootingStyles(random);
   currentResults = selectedBackgrounds.map((background, index) => {
     const angle = selectedAngles[index];
     const shootingStyle = selectedShootingStyles[index];
@@ -3479,12 +3705,14 @@ function renderBookendPreviews() {
 
 function renderProductUploadMode() {
   const isBookend = currentProductType === "bookend";
+  const isMaterialReplacement = isMaterialReplacementProduct();
   elements.singleUploadArea.hidden = isBookend;
   elements.bookendUploadArea.hidden = !isBookend;
 
   if (!isBookend) {
-    elements.productTypeHint.textContent =
-      "挂链款保持现有流程，上传一张主体图即可。";
+    elements.productTypeHint.textContent = isMaterialReplacement
+      ? "通用模式：上传任意物体图；到豆包时先放物体图，最后放玻璃材质参考图。不会自动增加挂链或底座。"
+      : "挂链款保持现有流程，上传一张主体图即可。";
     if (currentImageDataUrl) {
       setPreviewElement(
         "single",
@@ -3543,7 +3771,9 @@ function refreshAnalysisOutputs() {
   showToast(
     currentProductType === "bookend"
       ? "已生成左右书挡提示词、七组场景与商品简介"
-      : "已生成七组场景与商品简介",
+      : isMaterialReplacementProduct()
+        ? "已生成通用玻璃材质替换提示词、七组场景与商品简介"
+        : "已生成七组场景与商品简介",
   );
 }
 
@@ -3663,7 +3893,9 @@ function bindEvents() {
     showToast(
       currentProductType === "bookend"
         ? "已切换为书档款：左右主体可分别上传"
-        : "已切换为挂链款",
+        : isMaterialReplacementProduct()
+          ? "已切换为通用玻璃材质替换：不会增加挂链或底座"
+          : "已切换为挂链款",
     );
   });
   elements.clearButton.addEventListener("click", clearAll);
