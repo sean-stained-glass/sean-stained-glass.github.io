@@ -680,7 +680,7 @@ const bookendPromptLibrary = [
   {
     name: "成对书挡、书本与艺术书名",
     prompt:
-      "默认生成一对左右镜像的同主题书挡，但必须是两个彼此独立的书挡，每个书挡各有自己的竖向木板和横向底脚，不能共用一个连续底座，也不能做成中间一只主体加两侧装饰木块的结构。左侧书的左侧书挡：主体位于竖板外侧，主体内侧边缘直接贴合、连接或插入左侧书挡自己的竖板；右侧书挡反向镜像，主体位于竖板外侧。两块竖板朝内夹住书本，主体朝外展开，2至4本精装书位于两块竖板之间。主体不能放在书本正前方中央，也不能依靠一根中央透明立柱站立。书本必须有真实厚度、书脊、纸张边缘和重量感，书脊可露出简短、清楚的英文艺术书名或装饰性书名，例如 The Art of Nature、Forest Tales、Moon Garden、Silent Bloom，文字要像真实书脊印刷，不能乱码、水印、品牌标志或大面积营销文字。单只书挡也必须由一个竖向木板、一个横向底脚和一侧书本组成，主体直接连接自己的竖板。无论成对还是单只，都必须是书挡使用状态，不能变成摆件、挂件、相框或完整矩形玻璃画。",
+      "默认生成一对左右镜像的同主题书挡，但必须是两个彼此独立的书挡，每个书挡各有自己的竖向木板和横向底脚，不能共用一个连续底座，也不能做成中间一只主体加两侧装饰木块的结构。左侧书的左侧书挡：主体位于竖板外侧，主体内侧边缘直接贴合、连接或插入左侧书挡自己的竖板；右侧书挡反向镜像，主体位于竖板外侧。两块竖板保持正面朝前、内侧正对并夹住书本；主体图案可以在玻璃平面内向外舒展，但整个书挡不能向外旋转，左右底座和竖板必须保持共线正对，2至4本精装书位于两块竖板之间。主体不能放在书本正前方中央，也不能依靠一根中央透明立柱站立。书本必须有真实厚度、书脊、纸张边缘和重量感，书脊可露出简短、清楚的英文艺术书名或装饰性书名，例如 The Art of Nature、Forest Tales、Moon Garden、Silent Bloom，文字要像真实书脊印刷，不能乱码、水印、品牌标志或大面积营销文字。单只书挡也必须由一个竖向木板、一个横向底脚和一侧书本组成，主体直接连接自己的竖板。无论成对还是单只，都必须是书挡使用状态，不能变成摆件、挂件、相框或完整矩形玻璃画。",
   },
   {
     name: "主体材质与木质直接连接",
@@ -1346,7 +1346,7 @@ const bookendSelectionPrompt = `请从本轮生成的三张照片中选择一张
 
 主体轮廓验收：彩色主体只能保留图案自身的不规则外形，并带黑色或深灰外轮廓；主体之外只出现木质底座，除彩色主体本身外不出现其他玻璃结构。主体必须通过自身连续边缘直接贴合、插入或嵌入竖向木板窄槽，或用底部边缘直接接触横向底脚。其余主体外部区域必须直接显示真实桌面、书架或背景。
 
-书挡结构验收：必须有两个彼此独立的书挡，每个书挡各有一条深胡桃木竖向木板和一条自己的横向底脚，不能共用一个连续底座。左侧主体的内侧边缘必须直接嵌入或贴合左侧书挡自己的竖板窄槽，右侧主体反向镜像连接右侧竖板；主体朝外展开，书本位于两块竖板之间，不能把主体放在书本正前方中央，也不能依靠中央透明立柱站立。竖向木板覆盖主体高度约60%至85%，不能被省略、缩短成细线或藏在透明板后面；横向底脚稳定落地并向前延伸。主体与木座之间只保留主体自身边缘和木槽的直接连接。
+书挡结构验收：必须有两个彼此独立的书挡，每个书挡各有一条深胡桃木竖向木板和一条自己的横向底脚，不能共用一个连续底座。左侧主体的内侧边缘必须直接嵌入或贴合左侧书挡自己的竖板窄槽，右侧主体反向镜像连接右侧竖板；主体图案可以在玻璃平面内向外舒展，但书挡整体不能向外旋转，书本位于两块竖板之间，不能把主体放在书本正前方中央，也不能依靠中央透明立柱站立。竖向木板覆盖主体高度约60%至85%，不能被省略、缩短成细线或藏在透明板后面；横向底脚稳定落地并向前延伸。主体与木座之间只保留主体自身边缘和木槽的直接连接。
 
 材质与整体性验收：彩色主体必须与挂链款一致，使用平面2D彩色玻璃、黑色或深灰哑光外轮廓和连续完整的玻璃主体。内部可以保留连贯图案线，但必须是一个完整主体，不能拆成独立小玻璃片，不能出现随机碎玻璃、碎片、放射状裂片或散落碎渣。主体之外只出现木质底座，除彩色主体本身外不出现其他玻璃结构；连接只能由主体连续边缘与木质底座直接完成。木质底座为暖棕至深棕胡桃木，有自然木纹、轻微清漆光泽、方正直角和真实接触阴影。
 
@@ -1418,6 +1418,9 @@ const chainLengthSeparationRule =
 const bookendProductRule =
   "【产品款式最高优先级：书挡款，独立异形主体，黑线轮廓，连续玻璃整体】本轮生成的是书挡，不是挂饰，也不是完整矩形玻璃画。彩色主体只有图案自身的不规则轮廓，材质与挂链款完全相同：平面2D彩色玻璃、黑色或深灰哑光外轮廓、连续完整的玻璃主体。内部允许有连贯的图案线、羽毛线、花瓣线和颜色分区，但必须是一个完整主体，不能分成一堆独立小玻璃片，不能出现随机碎玻璃、碎片、放射状碎块、散落碎渣或马赛克碎裂感。主体之外只出现木质底座，除彩色主体本身外不出现其他玻璃结构。默认生成两个彼此独立的书挡，每个书挡各有一条深胡桃木竖向木板和一条横向底脚，不能共用一个连续长底座或中央透明立柱。左侧书挡的彩色主体位于自己的竖板外侧，内侧边缘直接贴合、插入或嵌入竖板窄槽；右侧书挡做完全镜像。两块竖板朝内夹住2至4本精装书，主体朝外展开，不能把主体放在书本正前方中央。竖向木板沿主体内侧上升，覆盖主体可见高度约60%至85%，不能被省略、缩成细线或藏进透明板后面。主体与木座之间的连接只能依靠主体连续边缘直接接入木质底座，连接处必须有真实接触、槽位、黑线包边和阴影，不能悬空。书脊可出现简短英文艺术书名。";
 
+const bookendFacingOverrideRule =
+  "【书挡朝向解释：只允许图案舒展，不允许整体旋转】前面所有“主体朝外展开”“主体朝外”“向外展开”的描述，只表示彩色玻璃图案在玻璃平面内向外舒展，不表示两个书挡整体向外或向内旋转。书挡的木底座和竖板必须始终正面朝前、左右共线、互相平行，像两条平行轨道夹住书本，不能像折叠屏风、V字相框或八字形支架一样有夹角。";
+
 const bookendContinuousGlassRule =
   "【书挡完整玻璃连接面与落地要求】彩色主体与竖向木板、横向木板之间必须由同一块连续玻璃轮廓直接连接，不允许只靠一条黑线、细杆、树枝状线条、金属细脚或空白缝隙相连。主体靠近木板的一侧必须自然延伸成大块完整玻璃连接面，连接面与主体共享连续外轮廓和黑线包边，颜色使用主体同色、白色、乳白或浅灰实体玻璃，不能拆成若干零散玻璃片。主体下缘、尾巴或花卉茎叶必须实际接触横向木板上表面，不能悬空；若尾巴或主体边缘靠近横向木板，必须用完整玻璃延长后落在横板上。横向木底座的下表面必须完整贴合桌面，形成连续、真实的接地阴影。横向木板下面不得出现任何木圆柱脚、小木脚、木钉、方脚、垫木、垫片、第二层底木、隐藏支撑或抬高结构；横向木板的底面本身就是唯一接触桌面的最低表面，必须直接平放在桌面上。主体下方不能出现额外的小玻璃脚、零散碎片、悬空细支架或与主体不相连的玻璃件。";
 
@@ -1472,31 +1475,31 @@ function buildBookendImageMappingRule() {
 
 function getProductStructureRule() {
   return isBookendProduct()
-    ? `${bookendProductRule}${bookendContinuousGlassRule}${bookendStraightAlignmentRule}${buildBookendImageMappingRule()}`
+    ? `${bookendProductRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}${bookendStraightAlignmentRule}${buildBookendImageMappingRule()}`
     : chainLengthSeparationRule;
 }
 
 function getSceneSubjectLockRule() {
   return isBookendProduct()
-    ? `${bookendSceneSubjectLockRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneSubjectLockRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
     : sceneSubjectLockRule;
 }
 
 function getSceneThreeImageRule() {
   return isBookendProduct()
-    ? `${bookendSceneThreeImageRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneThreeImageRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
     : sceneThreeImageRule;
 }
 
 function getScenePlacementRule() {
   return isBookendProduct()
-    ? bookendScenePlacementRule
+    ? `${bookendScenePlacementRule}${bookendFacingOverrideRule}`
     : scenePlacementRule;
 }
 
 function getSceneNegativeRule() {
   return isBookendProduct()
-    ? `${bookendSceneNegativeRule}${bookendContinuousGlassRule}`
+    ? `${bookendSceneNegativeRule}${bookendFacingOverrideRule}${bookendContinuousGlassRule}`
     : sceneNegativeRule;
 }
 
