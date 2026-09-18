@@ -3715,7 +3715,7 @@ function renderProductUploadMode() {
 
   if (!isBookend) {
     elements.productTypeHint.textContent = isMaterialReplacement
-      ? "通用模式：上传任意物体图；到豆包时先放物体图，最后放玻璃材质参考图。不会自动增加挂链或底座。"
+      ? "通用模式：工作台上传图1图案；豆包按图1图案、图2目标物体、图3可选颜色放图。主体变换只更换图2表面图案。"
       : "挂链款保持现有流程，上传一张主体图即可。";
     if (currentImageDataUrl) {
       setPreviewElement(
