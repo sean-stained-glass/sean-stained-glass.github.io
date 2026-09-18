@@ -3476,6 +3476,12 @@ function renderSubjectLibrary() {
         squareImageRatioRule,
         getProductStructureRule(),
         materialReplacementSubjectColorRule,
+        ...(colorVariable
+          ? [
+              buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false }),
+              buildEtsyShopStylePriorityRule(colorVariable),
+            ]
+          : []),
       ].join("\n\n"),
     );
     renderColorVariablePreview();
@@ -3539,7 +3545,7 @@ function renderMaterialLibrary() {
       ? bookendContinuousGlassRule
       : materialReferenceRule;
   const colorGuidance = isMaterialReplacementProduct()
-    ? materialReplacementColorRule
+    ? "【色彩变量位置】当前纸巾盒款的色彩变量已经写入主体变换提示词，本玻璃材质提示词不再重复设置颜色，也不会覆盖主体变换阶段确定的配色。"
     : colorVariable
       ? buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false })
       : strictColorPreservationRule;
@@ -3549,7 +3555,7 @@ function renderMaterialLibrary() {
     "玻璃材质提示词",
     materialItems.map((item) => ({
       ...item,
-      prompt: `${flatGlassRule}${colorStyleRule}${coloredShadowRule}${materialBaseRule}${stripSinglePromptCounts(item.prompt)}${getProductMaterialPriorityRule()}${buildEtsyShopStylePriorityRule(colorVariable)}`,
+      prompt: `${flatGlassRule}${colorStyleRule}${coloredShadowRule}${materialBaseRule}${stripSinglePromptCounts(item.prompt)}${getProductMaterialPriorityRule()}${isMaterialReplacementProduct() ? "" : buildEtsyShopStylePriorityRule(colorVariable)}`,
     })),
     [
       "本轮总共只生成3张照片。以下所有要求一次应用于这3张照片，不要按照每一条提示词分别再生成3张。",
