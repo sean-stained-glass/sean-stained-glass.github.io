@@ -1513,6 +1513,9 @@ const materialReplacementColorRule =
   "【颜色以最后一张材质参考图为准】图一物体原颜色不作为限制。最后一张材质参考图是唯一玻璃颜色、拼片大小、纹理、透光度、磨砂程度和铅线风格来源。允许彻底改变物体原来的颜色体系，但颜色必须保持高饱和、浓郁、实体、有玻璃颜料密度。若本轮另外选择了色彩变量，则色彩变量优先于材质参考图的颜色，但材质参考图的玻璃拼片、表面纹理、透光程度和铅线工艺仍必须保留。";
 
 
+const tissueBoxContainmentRule =
+  "【纸巾盒图案边界硬性约束】图1的图案必须完整收在图2纸巾盒当前可见表面的边界内。马的耳朵、头部、鬃毛、四肢、尾巴，以及月亮、花叶、星星、云、装饰和所有玻璃拼片，都不能越过纸巾盒的上、下、左、右边线，不能伸出盒体，不能悬空在盒外，不能贴到画面边缘。若纸巾盒可见面是 3:1 或类似的横向比例，图案必须按照该真实比例缩小、重新排版并完整适配，四周保留约5%至8%安全留白。任何超出纸巾盒表面边界的图案都判定为失败；空间不够时必须缩小图案，不能裁切、不能溢出、不能让局部悬在盒外。";
+
 const materialReplacementSubjectColorRule =
   "【纸巾盒款颜色优先级】第一，如果本轮在工作台选择了色彩变量，以工作台选择的色彩搭配为主，图1和图3颜色不得覆盖所选色彩变量，只允许黑色、深灰、白色、乳白或象牙白作为轮廓和高光辅助色。第二，如果本轮没有选择工作台色彩变量且提供了图3，则以图3主体的颜色作为图案主要配色参考。第三，如果本轮没有选择工作台色彩变量且没有图3，则使用图1图案原本的色相体系和颜色分布。颜色只作用于图2目标物体表面的图案，不改变目标物体原有基底、背景、桌面、阴影或倒影颜色。";
 
@@ -3476,6 +3479,7 @@ function renderSubjectLibrary() {
         squareImageRatioRule,
         getProductStructureRule(),
         materialReplacementSubjectColorRule,
+        tissueBoxContainmentRule,
         ...(colorVariable
           ? [
               buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false }),
