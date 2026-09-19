@@ -724,29 +724,29 @@ const bookendMaterialPromptLibrary = [
 
 const materialReplacementPromptLibrary = [
   {
-    name: "任意物体玻璃材质替换总控",
+    name: "纸巾盒图案与玻璃材质总控",
     prompt:
-      "图一是唯一物体外形基准，最后一张图是唯一玻璃材质参考。完整保留图一物体的外形、轮廓、比例、结构、视角、姿势、遮挡关系和裁切范围，只把物体的可见表面、内部填充、留白和原本透明的区域替换为传统手工彩色玻璃材质。最后一张图负责提供玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，但不复制其中的主体、轮廓、背景或构图。不要自动添加挂链、吊环、书挡、木质底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外玻璃结构。物体原本就有的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。",
+      "图1是唯一图案参考，图2是唯一纸巾盒外形与场景基准，图3是可选颜色参考。严格保留图2纸巾盒的外形、尺寸、比例、顶部抽纸开口、深色木框、木框厚度、正面玻璃面板边界、嵌槽、桌面、背景、机位、光线和接触阴影。只把图1的图案适配到图2的玻璃面板可见区域，图案必须在木框内边缘处硬裁切，不能压到木框、溢出盒体或改变盒体结构。玻璃保持薄平板、哑光和轻微磨砂质感，颜色浓郁、实体、有颜料密度。不要新增挂链、吊环、书挡、底座、托盘、支架、外框、透明背板、第二只纸巾盒或额外玻璃结构。",
   },
   {
-    name: "任意物体表面与透明区域填充",
+    name: "纸巾盒面板边界与透明区域填充",
     prompt:
-      "只改变材质，不改变物体身份。平面物体继续保持平面薄片结构；立体物体保留原有体积、边缘、转折和透视，只让可见表面表现为实体彩色玻璃，不要给物体增加额外透明厚度或水晶轮廓。原图透明、空白、镂空、负形和浅色区域，全部改成白色、乳白、象牙白、浅灰或实体粉彩玻璃，不能让背景从空洞中直接透出。颜色分区可以跟随最后一张材质参考图，但所有拼片必须归属于物体原有轮廓，不能把物体拆成一堆散落碎片。",
+      "只更换图2纸巾盒玻璃面板上的装饰图案，不改变纸巾盒身份、木框、开口和台面摆放。图1图案可以比面板大，但最终只能保留纸巾盒内边缘以内的部分，超出内边缘的头、耳、四肢、尾巴、叶片、月亮、星星和所有玻璃拼片全部硬裁切删除。透明、空白、负形和浅色区域改成白色、乳白、象牙白、浅灰或实体粉彩玻璃，不能留下透明空洞。所有拼片必须归属于面板矩形边界，不能散落到木框、盒体侧面或台面上。",
   },
   {
-    name: "铅线、玻璃分片与材质边界",
+    name: "纸巾盒铅线、玻璃分片与材质边界",
     prompt:
-      "使用黑色或深灰哑光铅线包住物体边缘和主要颜色分区，线条连续、贴合表面、像传统铅条镶嵌工艺。允许出现大块连续玻璃和少量自然小拼片，但不能把小拼片做成随机三角形、碎玻璃、放射状裂片、散落玻璃渣或马赛克碎裂感。玻璃表面保持哑光或轻微磨砂，颜色浓郁、实体、有颜料密度；不能变成整件透明玻璃、镜面玻璃、水晶切面、宝石、冰晶、树脂、亚克力、果冻或软糖。",
+      "使用黑色或深灰哑光铅线包住玻璃面板边缘和主要颜色分区，线条连续、贴合表面，像传统铅条镶嵌工艺。允许出现大块连续玻璃和少量自然小拼片，但不能把小拼片做成随机三角形、碎玻璃、放射状裂片、散落玻璃渣或马赛克碎裂感。玻璃表面保持哑光或轻微磨砂，颜色浓郁、实体、有颜料密度；不能变成整件透明玻璃、镜面玻璃、水晶切面、宝石、冰晶、树脂、亚克力、果冻或软糖。",
   },
   {
-    name: "任意物体原有结构与五金保留",
+    name: "纸巾盒木框、开口与支撑结构保留",
     prompt:
-      "严格保留图一物体的识别锚点、功能结构、开口、边缘、接缝、遮挡和支撑方式。相机、杯子、盒子、玩具、摆件、相框、花朵、动物或任何其他物体都不能因为材质替换而改变类别，也不能被重新设计成另一件产品。物体原本存在的金属、木材、布料、陶瓷、塑料或纸制配件保持各自原始材质；只有需要替换的实体表面变为彩色玻璃。不要新增挂链、底座、外框、托盘、透明背板或其他不存在的结构。",
+      "严格保留图2纸巾盒的矩形盒体、深色木框、顶部开口、抽出的白色纸巾、玻璃嵌槽、底部支撑和桌面接触关系。木框必须保持真实木材纹理、厚度和方正边角；白色纸巾从顶部自然抽出，不能被删除、压平或换成长条纸卷。纸巾盒必须稳稳放在水平台面上，不能悬空、倾斜、穿模或改变抽纸方向。不要新增挂链、底座、外框、托盘、透明背板或其他不存在的结构。",
   },
   {
-    name: "任意物体商品摄影与负面要求",
+    name: "纸巾盒 Etsy 实拍与中性阴影",
     prompt:
-      "真实相机实拍，主体边缘清晰，背景低对比并适当虚化。重点展示物体原形、玻璃色块、材质分片、铅线、磨砂表面和真实光影。物体的影子、桌面投影和倒影必须带玻璃本身的颜色，不能是纯黑死影。不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和 3D 玻璃雕刻；不要增加挂链、书挡、木底座、透明边框或第二主体。",
+      "真实家居商品摄影，优先使用图2原有的左前 35 至 45 度轻微俯视、正面偏左 10 至 15 度眼平和左前上方 25 至 30 度机位。重点展示纸巾盒木框、玻璃面板、铅线、磨砂表面、纸巾开口、台面与背景层次。纸巾盒和玻璃面板在桌面、墙面及邻近物体上的影子必须是实心、不透明的中性灰、炭灰或深木棕，不能出现红色、黄色、蓝色、绿色、紫色、粉色、彩虹色影子、彩色反光、彩色焦散或彩色倒影。不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散和 3D 玻璃雕刻；不要增加挂链、书挡、木底座、透明边框或第二主体。",
   },
 ];
 
@@ -1391,15 +1391,19 @@ const materialReferenceRule =
 
 const materialReplacementSelectionPrompt = `请从本轮生成的三张照片中选择一张作为后续唯一基准图。
 
-优先选择“同一个任意物体只替换了表面材质”的效果最准确的一张。物体必须仍然一眼可认出，原始外形、轮廓、结构、比例、视角、姿势、遮挡关系、裁切范围和可见部件必须保持不变，不能因为换材质而变成另一种物体。
+优先选择最接近 Etsy 实拍逻辑的一张：左前方 35 至 45 度轻微俯视，或正面偏左 10 至 15 度眼平机位。纸巾盒必须仍然一眼可认出，正面玻璃面板、顶部抽纸开口、白色纸巾、木框厚度、嵌槽和桌面接触关系完整清楚。
 
-材质验收：最后一张材质参考图必须成为唯一玻璃材质来源。提取它的玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，并映射到图一物体的可见表面与内部填充区域。不能复制参考图中的主体、轮廓、背景或具体构图。
+机位验收：优先左前三分之四、轻微俯视和眼平偏左角度。不能选择正俯拍、完全俯视、盒子倾斜、广角畸变或正面完全对称居中且没有环境层次的图片。
 
-结构验收：不得自动增加挂链、吊环、书挡、木底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外产品结构。物体原本就有的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。若物体原本透明或镂空，改成白色、乳白、象牙白、浅灰或实体彩色玻璃，不能留下透明空洞。
+材质验收：最后一张材质参考图必须成为唯一玻璃材质来源。提取它的玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，并映射到纸巾盒可见面板区域。不能复制参考图中的主体、轮廓、背景或具体构图。
+
+结构验收：玻璃面板不得改变矩形边界和木框结构，不能出现透明背板、额外边框、挂链、书挡、第二只纸巾盒或额外玻璃结构。纸张、顶部开口、木框和玻璃嵌槽必须保留。
+
+光影验收：桌面、墙面和玻璃投影必须是实心、不透明的中性灰、炭灰或深木棕，不能出现红色、黄色、蓝色、绿色、紫色、粉色、彩虹色影子、彩色反光或彩色焦散。白色纸巾和木框阴影也必须保持中性灰黑。
 
 材质失败项：水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和 3D 玻璃雕刻均判定为失败。
 
-选定后，后续所有生成必须以这张照片为唯一锚点，严格冻结物体外形、结构、比例、姿势、视角、遮挡关系、裁切范围和玻璃材质风格。后续只允许改变背景、道具、光线、机位和构图，不允许重新设计物体，不允许改变物体类别，不允许新增挂链、底座或外框。`;
+选定后，后续所有生成必须以这张照片为唯一锚点，严格冻结纸巾盒外形、木框、玻璃面板、纸巾高度、视角范围、裁切范围和玻璃材质风格。后续只允许改变背景、道具、光线、机位和构图，不允许重新设计纸巾盒或新增挂链、底座或外框。`;
 
 const subjectCompositionRule =
   "构图与身体范围严格以图一为准：图一显示到哪里，结果就只显示到哪里。若图一是头像、胸像、半身雕塑或只到胸部、肩部，结果必须保持相同范围，不得自行补出腹部、腰、胯、腿、脚或更长的身体，不得把胸像扩成半身像、七分身或全身像。主体最下方要有服饰收口、布料折返、雕塑底座、轮廓闭合或可见背景留白来完成收尾，不能平直截断在画面边缘，不能继续向画布下方延伸，不能看起来还能继续扩图。保持图一相同的镜头距离、裁切比例、主体占比和位置，不改变现有可见的主体内容。";
@@ -1495,19 +1499,19 @@ const bookendMaterialPriorityRule =
   "【书挡材质与整体性最高优先级】书挡款的彩色主体材质与挂链款完全相同：平面2D彩色玻璃、黑色或深灰哑光外轮廓、连续完整的手工玻璃质感，不改成薄印刷亚克力、透明水晶、果冻或厚玻璃。主体可以有连贯图案线，但必须保持为一个完整玻璃整体，不能被拆成一堆小片，也不能出现随机碎玻璃、碎片、放射状裂纹或散落玻璃渣。主体之外只出现木质底座，除主体本身外不出现其他玻璃结构，连接只能由主体连续边缘直接嵌入木质底座窄槽完成。没有最后一张书档材质参考图时，木质部分默认是暖棕到深棕的实心胡桃木L形书挡，竖向木板与横向底脚都清楚可见，木纹自然、连接真实；一旦上传最后一张材质参考图，则以该参考图为准。";
 
 const materialReplacementProductRule =
-  "【产品款式最高优先级：通用玻璃材质替换】本轮不是挂链款，也不是书挡款。图一是唯一物体外形基准，最后一张图是唯一玻璃材质参考。必须完整保留图一任意物体的外形、轮廓、比例、结构、视角、姿势、遮挡关系、裁切范围和功能部件，只把物体的实体表面、内部填充、空白和原本透明区域替换为传统手工彩色玻璃材质。最后一张材质参考图决定玻璃颜色体系、拼片大小、纹理、透光度、磨砂程度、铅线粗细和表面质感，但不复制其中的主体、轮廓、背景或具体构图。若还需要背景参考图，请把背景图放在材质参考图之前，最后一张始终固定为材质参考。严禁自动增加挂链、吊绳、吊环、书挡、木质底座、托盘、支架、外框、透明背板、整圈玻璃边框或额外玻璃结构。物体原本存在的把手、带子、提手、盖子、铰链、扣件、轮子、支架和连接件必须保留。";
+  "【产品款式最高优先级：纸巾盒款】本轮不是挂链款，也不是书挡款。图1是唯一图案参考，图2是唯一纸巾盒外形、木框、场景、机位、光线和阴影基准，图3是可选颜色参考。严格保留图2纸巾盒的矩形比例、尺寸、木框厚度、玻璃面板边界、顶部抽纸开口、白色纸巾、嵌槽、桌面接触和背景结构，只把图1图案适配到图2玻璃面板内边缘以内的可见区域。图案超出内边缘的部分必须硬裁切删除。不要新增挂链、吊绳、吊环、书挡、额外底座、托盘、支架、外框、透明背板、整圈玻璃边框、第二只纸巾盒或额外玻璃结构。";
 
 const materialReplacementSubjectLockRule =
   "【纸巾盒款主体变换：图1图案、图2纸巾盒、图3可选颜色】图1是唯一图案与图像参考，只提取图1中的主体造型、图案、轮廓、象征元素和构图关系，并删除图1自己的背景、边框、无关道具和文字。图2是唯一纸巾盒本体；必须严格保留图2的外形、结构、比例、尺寸、开口、盒体轮廓、边缘、转角、接缝、材质、原有颜色基底、背景、机位、光线、阴影、桌面和其他物体。图3是可选颜色参考图，只提取图3主体的颜色搭配、色相关系、饱和度、明暗层次和主辅色比例，不复制图3的造型、图案、构图、背景或物体。只更换图2目标物体表面的装饰图案，其他内容全部保持不变。把图1图案重新适配到图2可见的正面、顶面或侧面区域，图案必须贴合目标物体原有表面边界、转角、开口和结构，不能改变物体几何形状，不能覆盖或破坏原本的功能结构。";
 
 const materialReplacementThreeImageRule =
-  "请生成本场景的3张独立图片，不要拼图。三张必须保持同一物体、同一外形结构、同一视角范围、同一玻璃材质风格和同一背景场景；只允许在机位微调、景别、焦点、光线方向和道具位置中做轻微变化。三张都必须表现为同一个物体完成玻璃材质替换，不能改变物体类别、轮廓、比例、姿势或可见部件。";
+  "请生成本场景的3张独立图片，不要拼图。三张必须保持同一纸巾盒、同一木框、同一玻璃面板、同一纸巾高度和同一桌面支撑方式，只允许在机位微调、景别、焦点、光线方向、背景道具位置和桌面纹理中做轻微变化。严禁正俯拍、完全俯视、顶层平铺和无透视产品的整体俯视图。三张都必须表现为同一个纸巾盒完成图案替换，不能改变盒子类别、轮廓、比例、木框或可见部件。";
 
 const materialReplacementPlacementRule =
-  "【通用材质替换场景摆放】不强制把物体改成悬挂、书挡或桌面摆件。物体沿用它原本合理的支撑和展示方式：原图能站立就自然站立，能手持就手持，平放就平放，有支架就继续使用原支架，有底座就保留原底座。场景只负责选择真实环境、光线和机位，不能为了场景需要新增挂链、吊环、支撑杆、透明背板、整圈边框或其他不存在的结构。物体必须有真实接触阴影，不能悬空。";
+  "【纸巾盒场景摆放】纸巾盒必须始终稳稳放在水平台面上，优先浅色大理石台面、梳妆台、玄关柜、边桌、窗台、木质桌面或低对比家居台面。优先背景为灰绿或暖灰墙面、抽象装饰画、蕨类植物、小型绿植、白色花盆、银边镜、条纹椅、圆形编织垫或简洁窗帘。背景只保留2至3个相关道具，不能遮挡正面玻璃面板和抽纸开口。盒子底面与台面必须有真实接触阴影，不能悬空、倾斜、穿模或放在软布上失去支撑。不要为了场景新增挂链、吊环、支撑杆、透明背板、整圈边框或其他不存在的结构。";
 
 const materialReplacementNegativeRule =
-  "不要改变物体类别、外形、轮廓、比例、结构、姿势、视角、裁切、遮挡关系和功能部件；不要增加挂链、吊绳、吊环、挂钩、书挡、木质底座、托盘、支架、外框、透明背板或整圈玻璃边框；不要新增第二主体；不要复制材质参考图的物体、背景和构图；不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和3D玻璃雕刻；不要文字、水印、拼图或复杂背景。";
+  "不要改变纸巾盒类别、外形、木框、玻璃面板尺寸、顶部开口、抽纸方向、支撑方式和桌面接触关系；不要增加挂链、吊绳、吊环、挂钩、书挡、木质底座、托盘、支架、外框、透明背板或整圈玻璃边框；不要新增第二只纸巾盒或第二主体；不要正俯拍、完全俯视、广角畸变、鱼眼、盒子倾斜或悬空；不要彩色影子、彩虹倒影、红黄蓝绿彩色焦散、彩色光斑、RGB补光、霓虹灯、硬闪、生硬黑边、HDR、卡通感、文字、水印或拼图；不要水晶、冰晶、宝石、透明树脂、亚克力、厚玻璃、玻璃砖、果冻、软糖、塑料、镜面高光、边缘发光、内部发光、色散、彩虹折射、整件透明和3D玻璃雕刻。";
 
 const materialReplacementColorRule =
   "【颜色以最后一张材质参考图为准】图一物体原颜色不作为限制。最后一张材质参考图是唯一玻璃颜色、拼片大小、纹理、透光度、磨砂程度和铅线风格来源。允许彻底改变物体原来的颜色体系，但颜色必须保持高饱和、浓郁、实体、有玻璃颜料密度。若本轮另外选择了色彩变量，则色彩变量优先于材质参考图的颜色，但材质参考图的玻璃拼片、表面纹理、透光程度和铅线工艺仍必须保留。";
@@ -1518,6 +1522,15 @@ const tissueBoxContainmentRule =
 
 const materialReplacementSubjectColorRule =
   "【纸巾盒款颜色优先级】第一，如果本轮在工作台选择了色彩变量，以工作台选择的色彩搭配为主，图1和图3颜色不得覆盖所选色彩变量，只允许黑色、深灰、白色、乳白或象牙白作为轮廓和高光辅助色。第二，如果本轮没有选择工作台色彩变量且提供了图3，则以图3主体的颜色作为图案主要配色参考。第三，如果本轮没有选择工作台色彩变量且没有图3，则使用图1图案原本的色相体系和颜色分布。颜色只作用于图2目标物体表面的图案，不改变目标物体原有基底、背景、桌面、阴影或倒影颜色。";
+
+const tissueBoxAnglePriorityRule =
+  "【纸巾盒 Etsy 实拍机位优先级】优先复用卖家实拍角度。第一优先：相机位于纸巾盒左前方 35 至 45 度，高度接近盒体中上部，仅轻微俯视 8 至 15 度，使用 35 至 50mm 等效焦段。第二优先：相机与顶部开口接近同高，位于正面偏左 10 至 15 度，使用 35 至 50mm 等效焦段。第三优先：相机位于左前上方 25 至 30 度，仍以完整正面玻璃面板为视觉核心。其余机位只能在这些角度上做轻微高度、焦段和构图变化。禁止正俯拍、完全俯视、顶部平铺、低角度夸张仰拍、广角畸变、鱼眼和正面完全对称居中且没有环境层次的构图。";
+
+const tissueBoxShadowRule =
+  "【纸巾盒中性阴影硬规则】彩色玻璃面板不产生彩色光线。纸巾盒、玻璃面板、木框和白色纸巾在桌面、墙面及邻近物体上的影子必须是实心、不透明、低饱和的中性灰、炭灰或深木棕，边缘柔但有明确方向。禁止红色、黄色、蓝色、绿色、紫色、粉色、彩虹色影子、彩色反光、彩色焦散、彩色光斑和彩色倒影。建筑、家具、植物和背景道具也保持正常真实的中性光影。";
+
+const tissueBoxBackgroundBudgetRule =
+  "背景只保留 2 至 3 个相关道具，浅景深虚化，纸巾盒始终是最清晰、最大的视觉中心。真实相机实拍，自然焦外虚化。纸巾盒和玻璃面板产生实心、不透明的中性灰黑阴影，不能带玻璃颜色；背景物件的光影保持正常真实。";
 
 function isBookendProduct() {
   return currentProductType === "bookend";
@@ -1589,7 +1602,7 @@ function getBookendCaptureModeRule(index) {
 
 function getProductMaterialPriorityRule() {
   if (isMaterialReplacementProduct()) {
-    return `${materialReplacementProductRule}${materialReplacementPromptLibrary[0].prompt}`;
+    return `${materialReplacementProductRule}${materialReplacementPromptLibrary[0].prompt}${tissueBoxAnglePriorityRule}${tissueBoxShadowRule}`;
   }
   return isBookendProduct() ? `${bookendMaterialPriorityRule}${bookendLastReferenceMaterialRule}` : "";
 }
@@ -2401,91 +2414,119 @@ function selectBackgrounds(
 
 const materialReplacementAngles = [
   {
-    slotId: "hero",
-    slotName: "正面主视觉",
-    text: "相机与物体中心同高，正面平视，85mm商品镜头。",
-    composition: "物体完整居中，占画面约45%，背景保留负空间，不增加挂链、底座或外框。",
+    slotId: "etsy-left-three-quarter",
+    slotName: "Etsy 左前 45° 微俯主视觉",
+    text:
+      "相机位于纸巾盒左前方约35至45度，相机高度接近盒体中上部，仅轻微俯视8至15度，使用35至50mm等效焦段。完整展示正面玻璃面板、窄条顶面、左侧木框和抽出的纸巾。",
+    composition:
+      "纸巾盒位于画面中央略偏左，占画面宽度约60%至70%，正面面板完整不裁切，不正面完全对称居中，不做正俯拍。",
   },
   {
-    slotId: "top",
-    slotName: "高角度俯拍",
-    text: "相机位于物体右上方约25度，50mm镜头向下拍摄。",
-    composition: "完整显示物体顶部、表面玻璃分区和原有结构，背景低对比。",
+    slotId: "etsy-eye-level",
+    slotName: "Etsy 正面偏左眼平机位",
+    text:
+      "相机与纸巾盒顶部开口接近同高，位于正面偏左10至15度，使用35至50mm等效焦段。盒子横向摆正，正面玻璃面板和白色纸巾是视觉中心。",
+    composition:
+      "产品位于三分线或中央略偏左，顶部开口和纸巾完整可见，盒体四边保持平直，不能出现广角畸变。",
   },
   {
-    slotId: "low",
-    slotName: "低角度仰拍",
-    text: "相机低于物体中心约15度，50mm镜头轻微仰拍。",
-    composition: "物体保持原比例和原支撑方式，不能悬空，不新增不存在的底脚。",
+    slotId: "etsy-elevated",
+    slotName: "Etsy 左前上方 25° 至 30°",
+    text:
+      "相机位于纸巾盒左前上方约25至30度，使用35至50mm等效焦段，适度展示浅色台面、盒顶开口和完整玻璃面板。",
+    composition:
+      "盒体占画面约55%至65%，台面前景保留自然空间，背景镜面、植物或装饰画低对比虚化，不能变成正俯拍。",
   },
   {
-    slotId: "macro",
-    slotName: "材质近景微距",
-    text: "100mm微距近景，焦点落在玻璃分片、铅线、磨砂表面和物体原有边缘。",
-    composition: "允许轻微裁切，但必须保留物体类别和关键结构，背景完全虚化。",
+    slotId: "etsy-low-hero",
+    slotName: "Etsy 低机位三分之四主视觉",
+    text:
+      "相机高度接近盒体中部，从左前方约30至40度拍摄，轻微俯视5至10度，使用35至50mm等效焦段，突出木框厚度和玻璃面板。",
+    composition:
+      "纸巾向上自然抽出，盒体稳稳接触台面，正面面板占主要视觉面积，背景只保留低对比陪衬。",
   },
   {
-    slotId: "hand",
-    slotName: "手持托持展示",
-    text: "一只手从画面侧边进入，只轻轻托住物体底部或原有把手，不增加挂链或吊绳。",
-    composition: "手部只占小面积，不遮挡物体识别结构，物体必须有真实支撑和接触阴影。",
+    slotId: "etsy-environment",
+    slotName: "Etsy 左前环境三分线",
+    text:
+      "35至50mm环境镜头，从前左约35度并在盒体上方约12至18度拍摄，保留台面、背景墙面和2至3个家居道具。",
+    composition:
+      "纸巾盒位于左三分线或中央略偏左，另一侧保留环境空间，台面、墙面和背景形成前中后景层次。",
   },
   {
-    slotId: "light",
-    slotName: "光影与倒影",
-    text: "相机正面或侧前方约30度，使用侧后方自然光，让物体表面玻璃色块和原有轮廓清楚。",
-    composition: "影子、桌面投影和倒影带玻璃本身颜色，不能是纯黑死影，也不能盖过物体。",
+    slotId: "etsy-close-detail",
+    slotName: "Etsy 面板与木框近景",
+    text:
+      "50至85mm近景，从左前方约30至40度、轻微俯视拍摄，焦点落在玻璃拼片、铅线、木框、嵌槽和纸巾开口。",
+    composition:
+      "允许轻微裁切背景，但必须保留完整正面面板和纸巾开口，不能只拍玻璃图案或丢失盒体识别。",
   },
   {
-    slotId: "wide",
-    slotName: "环境三分线",
-    text: "35mm或50mm环境镜头，物体位于左侧或右侧三分线。",
-    composition: "另一侧保留环境空间，背景有前中后景层次，物体保持原始展示方式。",
+    slotId: "etsy-tissue-highlight",
+    slotName: "Etsy 抽纸与台面关系",
+    text:
+      "相机位于正面偏左约15至25度，高度略高于纸巾盒，使用35至50mm等效焦段，重点展示白色纸巾、顶部开口、玻璃面板与台面接触阴影。",
+    composition:
+      "白色纸巾形成柔和竖向形态，盒体与台面接触稳固，阴影为中性灰黑，不遮盖面板图案。",
   },
 ];
 
 const materialReplacementShootingStyles = [
   {
-    id: "material-natural",
-    name: "自然光材质展示",
-    text: "中长焦自然光实拍，物体占画面约40%至55%，表面玻璃分区、铅线和原有结构清楚，背景自然虚化。",
-    composition: "物体居中或轻微偏离中心，保留完整轮廓和真实接触阴影。",
+    id: "tissue-etsy-hero",
+    name: "Etsy 左前 45° 主图",
+    text:
+      "真实家居商品摄影，35至50mm等效焦段，纸巾盒位于中左或左前三分线，背景使用灰墙、装饰画和蕨类植物，柔和漫反射光从左前上方照入。",
+    composition:
+      "产品占画面宽度约60%至70%，完整展示正面面板、窄顶面和左侧木框，纸巾从顶部自然抽出。",
   },
   {
-    id: "material-window",
-    name: "窗边侧光材质",
-    text: "正面或侧前方15至30度，自然侧光照亮玻璃表面，物体保持原展示方式，不改成悬挂。",
-    composition: "窗边道具只作低对比陪衬，不能遮挡物体识别结构。",
+    id: "tissue-etsy-eye-level",
+    name: "Etsy 眼平偏左机位",
+    text:
+      "相机高度接近纸巾盒顶部，正面偏左10至15度，35至50mm等效焦段，白色纸巾形成清晰竖向形态。",
+    composition:
+      "盒体保持水平，正面面板和顶部开口同时可辨，背景只保留2至3个低对比道具。",
   },
   {
-    id: "material-garden",
-    name: "户外自然侧光",
-    text: "使用方向明确的自然侧光，背景为虚化花园、植物或户外空间，物体仍保持原始支撑方式。",
-    composition: "物体位于中央或三分线，轮廓完整，不能悬空或新增不存在的支架。",
+    id: "tissue-etsy-elevated",
+    name: "Etsy 左前高位",
+    text:
+      "相机位于左前上方25至30度，使用35至50mm等效焦段，保留台面、背景镜面、植物或装饰画的层次。",
+    composition:
+      "不是正俯拍，正面玻璃面板仍占主导，盒体比例自然，背景元素不遮挡纸巾开口。",
   },
   {
-    id: "material-macro",
-    name: "近景材质微距",
-    text: "100mm微距感近景，焦点落在玻璃色块、铅线、磨砂颗粒和物体原有边缘。",
-    composition: "允许轻微裁切，但必须保留物体类别和关键识别特征。",
+    id: "tissue-etsy-low-hero",
+    name: "Etsy 低机位三分之四",
+    text:
+      "相机接近盒体中部高度，左前30至40度，轻微俯视5至10度，突出木框厚度、玻璃面板和抽出的纸巾。",
+    composition:
+      "主体完整落地并产生中性灰黑接触阴影，不显示彩色影子或彩色倒影。",
   },
   {
-    id: "material-backlit",
-    name: "柔和背光材质",
-    text: "背景明亮，物体受到柔和背光或侧逆光，玻璃保持实体颜色和有限透光，不能过曝成透明水晶。",
-    composition: "物体完整清楚，不使用边缘发光、彩虹折射或内部发光。",
+    id: "tissue-marble-lifestyle",
+    name: "大理石台面实拍",
+    text:
+      "浅色大理石台面，带细腻灰色纹理，柔和漫反射光，背景为低对比灰绿墙、抽象画和植物。",
+    composition:
+      "纸巾盒位于三分线，台面前景保留空间，背景元素虚化但仍可辨认。",
   },
   {
-    id: "material-warm-bokeh",
-    name: "季节暖光散景",
-    text: "50至85mm中长焦，暖色自然光或柔和环境灯，背景形成低对比暖色散景。",
-    composition: "暖光只作背景氛围，不能改变物体材质导致发灰、粉白或透明。",
+    id: "tissue-window-soft",
+    name: "窗边柔和自然光",
+    text:
+      "大面积柔光从左侧或左前上方照入，色温约5200至5600K，玻璃颜色丰富但不过曝，木材保留自然纹理。",
+    composition:
+      "背后植物、镜面或窗帘低对比虚化，纸巾和木框阴影保持中性灰色。",
   },
   {
-    id: "material-environment",
-    name: "环境空间展示",
-    text: "35至50mm环境镜头，物体占画面约25%至35%，背景保留可辨认但低对比的前中后景。",
-    composition: "物体放在合理位置并使用原有支撑方式，不能被家具或植物遮挡。",
+    id: "tissue-detail",
+    name: "面板与木框近景",
+    text:
+      "50至85mm近景，焦点落在玻璃拼片、铅线、磨砂表面、木框嵌槽和纸巾开口，背景自然虚化。",
+    composition:
+      "允许轻微裁切，但必须保留完整正面面板、顶部开口和至少一侧木框，不能变成平铺图案。",
   },
 ];
 
@@ -2509,21 +2550,11 @@ function selectShootingStyles(random) {
 }
 
 function selectMaterialReplacementAngles(random) {
-  const angles = [...materialReplacementAngles];
-  for (let index = angles.length - 1; index > 0; index--) {
-    const swapIndex = Math.floor(random() * (index + 1));
-    [angles[index], angles[swapIndex]] = [angles[swapIndex], angles[index]];
-  }
-  return angles.slice(0, 7);
+  return [...materialReplacementAngles].slice(0, 7);
 }
 
 function selectMaterialReplacementShootingStyles(random) {
-  const styles = [...materialReplacementShootingStyles];
-  for (let index = styles.length - 1; index > 0; index--) {
-    const swapIndex = Math.floor(random() * (index + 1));
-    [styles[index], styles[swapIndex]] = [styles[swapIndex], styles[index]];
-  }
-  return styles.slice(0, 7);
+  return [...materialReplacementShootingStyles].slice(0, 7);
 }
 
 function getBookendAngleText(angle) {
@@ -2645,7 +2676,7 @@ function buildPrompt(analysis, background, angle, timeOfDay, shootingStyle, inde
     ...backgroundLines,
     `时间氛围：${timeOfDay.text}`,
     "",
-    `${backgroundBudgetRule}${squareImageRatioRule}${singleLayerOcclusionRule}`,
+    `${isMaterialReplacementProduct() ? tissueBoxBackgroundBudgetRule : backgroundBudgetRule}${squareImageRatioRule}${singleLayerOcclusionRule}`,
     "",
     themeIsolationRule,
     "",
@@ -2654,7 +2685,7 @@ function buildPrompt(analysis, background, angle, timeOfDay, shootingStyle, inde
     getProductMaterialPriorityRule(),
     "",
     isMaterialReplacementProduct()
-      ? materialReplacementColorRule
+      ? materialReplacementSubjectColorRule
       : strictColorPreservationRule,
     "",
     vividnessPriorityRule,
@@ -2706,15 +2737,15 @@ function buildBatchPrompt() {
     isBookendProduct()
       ? "【书档七组拍摄分配】七组中固定有三组采用近景特写，分别是第1、4、6组；其余第2、3、5、7组采用正常背景商品拍摄。三组近景要保留玻璃连接、底座、木纹和书脊细节，其余四组要保留可辨认但低对比的书桌、书架或阅读角环境。"
       : "",
-    backgroundBudgetRule,
+    isMaterialReplacementProduct() ? tissueBoxBackgroundBudgetRule : backgroundBudgetRule,
     themeIsolationRule,
     squareImageRatioRule,
     singleLayerOcclusionRule,
-    coloredShadowRule,
+    isMaterialReplacementProduct() ? tissueBoxShadowRule : coloredShadowRule,
     vividGlassColorRule,
     getProductMaterialPriorityRule(),
     isMaterialReplacementProduct()
-      ? materialReplacementColorRule
+      ? materialReplacementSubjectColorRule
       : strictColorPreservationRule,
     vividnessPriorityRule,
     buildEtsyShopStylePriorityRule(getColorVariable()),
@@ -2725,7 +2756,7 @@ function buildBatchPrompt() {
     "",
     batch.closing ||
       (isMaterialReplacementProduct()
-        ? "七组必须使用同一任意物体、同一外形结构、同一玻璃材质风格和同一原始支撑方式，只改变背景、道具、光线、机位与构图。不要新增挂链、书挡、底座、外框、透明背板或其他不存在的结构。每组都必须输出3张独立图片，不要拼图，不要少生成。"
+        ? "七组必须使用同一纸巾盒、同一木框、同一玻璃面板、同一纸巾高度和同一桌面支撑方式，只改变家居背景、道具、光线、机位与构图。每组都必须优先使用 Etsy 实拍机位：左前35至45度轻微俯视、正面偏左10至15度眼平、左前上方25至30度。不要正俯拍，不要彩色影子。每组都必须输出3张独立图片，不要拼图，不要少生成。"
         : isBookendProduct()
           ? "七组必须使用同一套书挡主体、同一玻璃材质、同一木质底座结构和同一左右对应关系，只改变书架场景、书本、道具、光线、机位与构图，绝不能出现挂链。每组都必须输出3张独立图片，不要拼图，不要少生成。"
           : "七组必须使用同一主体、同一彩色玻璃材质和同一挂链数量，只改变场景、道具、光线、机位与构图。每组都必须输出 3 张独立图片，不要拼图，不要少生成。"),
@@ -3480,6 +3511,8 @@ function renderSubjectLibrary() {
         getProductStructureRule(),
         materialReplacementSubjectColorRule,
         tissueBoxContainmentRule,
+        tissueBoxAnglePriorityRule,
+        tissueBoxShadowRule,
         ...(colorVariable
           ? [
               buildSubjectColorVariableRule(colorVariable, { allowStructuralChanges: false }),
@@ -3559,7 +3592,7 @@ function renderMaterialLibrary() {
     "玻璃材质提示词",
     materialItems.map((item) => ({
       ...item,
-      prompt: `${flatGlassRule}${colorStyleRule}${coloredShadowRule}${materialBaseRule}${stripSinglePromptCounts(item.prompt)}${getProductMaterialPriorityRule()}${isMaterialReplacementProduct() ? "" : buildEtsyShopStylePriorityRule(colorVariable)}`,
+      prompt: `${flatGlassRule}${colorStyleRule}${isMaterialReplacementProduct() ? tissueBoxShadowRule : coloredShadowRule}${materialBaseRule}${stripSinglePromptCounts(item.prompt)}${getProductMaterialPriorityRule()}${isMaterialReplacementProduct() ? "" : buildEtsyShopStylePriorityRule(colorVariable)}`,
     })),
     [
       "本轮总共只生成3张照片。以下所有要求一次应用于这3张照片，不要按照每一条提示词分别再生成3张。",
@@ -3580,7 +3613,7 @@ function renderSelectionPrompt() {
       ? bookendSelectionPrompt
       : selectionPrompt;
   const colorRule = isMaterialReplacementProduct()
-    ? materialReplacementColorRule
+    ? materialReplacementSubjectColorRule
     : strictColorPreservationRule;
   elements.selectionPromptBox.value = `${baseSelectionPrompt}
 
@@ -3600,7 +3633,13 @@ ${getProductMaterialPriorityRule()}
 
 ${buildEtsyShopStylePriorityRule(colorVariable)}
 
-【动作验收】优先选择动作原型最明确、最有礼物与纪念叙事的一张，不接受只是在同一基础接触、支撑、骑坐、趴卧、依附或蜷缩姿势上小幅调整手臂、头部或倾斜角度。若三张中有一张呈现独立祝福、赠予、回望、引路、上升或跨越动作，优先选择这一张。
+${isMaterialReplacementProduct() ? tissueBoxAnglePriorityRule : ""}
+
+${isMaterialReplacementProduct() ? tissueBoxShadowRule : ""}
+
+${isMaterialReplacementProduct()
+  ? "【纸巾盒机位验收】优先选择左前35至45度轻微俯视、正面偏左10至15度眼平或左前上方25至30度的一张。不能选择正俯拍、完全俯视、盒子倾斜、广角畸变或正面完全对称居中且没有环境层次的图片。桌面、墙面和玻璃投影必须是实心、不透明的中性灰、炭灰或深木棕，不能出现任何彩色影子或彩色焦散。"
+  : "【动作验收】优先选择动作原型最明确、最有礼物与纪念叙事的一张，不接受只是在同一基础接触、支撑、骑坐、趴卧、依附或蜷缩姿势上小幅调整手臂、头部或倾斜角度。若三张中有一张呈现独立祝福、赠予、回望、引路、上升或跨越动作，优先选择这一张。"}
 
 ${chromaticRangeControlRule}`;
 }
