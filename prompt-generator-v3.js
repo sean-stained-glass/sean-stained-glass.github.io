@@ -1692,13 +1692,13 @@ const tissueBoxBackgroundBudgetRule =
   "背景只保留 2 至 3 个相关道具，浅景深虚化，纸巾盒始终是最清晰、最大的视觉中心。真实相机实拍，自然焦外虚化。纸巾盒和玻璃面板产生实心、不透明的中性灰黑阴影，不能带玻璃颜色；背景物件的光影保持正常真实。";
 
 const tissueBoxLightOnText =
-  "纸巾盒里面有微弱的暖黄色光源会发光，主体色彩不变。";
+  "纸巾盒里面有微弱的暖黄色光源会发光，主体色彩不变（只增加盒内微弱暖光，不改变 Etsy 实拍机位、构图和背景）。";
 
 const tissueBoxLightOffText =
   "不开灯，纸巾盒内部没有任何光源，不出现发光、光晕、内部亮光或任何盒内光点。";
 
 const tissueBoxLightBatchRule =
-  "【纸巾盒灯光变量】七组场景中随机且固定只有两组开灯，其余五组一律不开灯。开灯组必须在提示词中写明：纸巾盒里面有微弱的暖黄色光源会发光，主体色彩不变；不开灯组必须写明盒子内部没有光源。不允许七组全部开灯或全部不开灯。";
+  "【纸巾盒灯光变量】七组场景中随机且固定只有两组开灯，其余五组一律不开灯。开灯组必须在提示词中写明：纸巾盒里面有微弱的暖黄色光源会发光，主体色彩不变；不开灯组必须写明盒子内部没有光源。不允许七组全部开灯或全部不开灯。本变量优先级低于前面所有 Etsy 实拍与店铺风格规则：开灯只允许增加盒内一层微弱暖黄光，不得改变 Etsy 实拍机位、景别、构图、背景内容、光线方向和中性阴影规则。";
 
 function isBookendProduct() {
   return currentProductType === "bookend";
@@ -2927,7 +2927,6 @@ function buildBatchPrompt() {
       ? "【书档七组拍摄分配】七组中固定有三组采用近景特写，分别是第1、4、6组；其余第2、3、5、7组采用正常背景商品拍摄。三组近景要保留玻璃连接、底座、木纹和书脊细节，其余四组要保留可辨认但低对比的书桌、书架或阅读角环境。"
       : "",
     isMaterialReplacementProduct() ? tissueBoxBackgroundBudgetRule : backgroundBudgetRule,
-    isMaterialReplacementProduct() ? tissueBoxLightBatchRule : "",
     themeIsolationRule,
     squareImageRatioRule,
     singleLayerOcclusionRule,
@@ -2939,6 +2938,7 @@ function buildBatchPrompt() {
       : strictColorPreservationRule,
     vividnessPriorityRule,
     buildEtsyShopStylePriorityRule(getColorVariable()),
+    isMaterialReplacementProduct() ? tissueBoxLightBatchRule : "",
     getSceneNegativeRule(),
     "",
     "【七组差异项】",
