@@ -1682,6 +1682,9 @@ const tissueBoxContainmentRule =
 const tissueBoxBackgroundLockRule =
   "【纸巾盒背景锁定硬规则】图2是唯一背景与场景来源，背景必须原样复刻：同一面墙与墙面颜色、同一桌面与木纹方向、同一台布或台面材质、同一窗光方向与强度、同一背景道具及其位置、同一机位与裁切范围。禁止替换房间、墙面颜色、桌面材质、背景道具、窗外景色或光线氛围；禁止把背景简化成纯色或白色棚拍底；禁止新增或删除背景里的物体；图2里看不到的背景内容不许凭空编造。图2如果是实拍桌面并带有笔记本、绿植、水瓶、纸巾盒等物件，这些物件的位置、形状和数量都要原样保留。只有玻璃面板内的图案允许更换，盒子周围的环境、桌面、道具、阴影和倒影都必须与图2保持一致。";
 
+const tissueBoxSceneIdentityRule =
+  "【纸巾盒盒体一致性硬规则】本轮所有图片（七组场景）共用同一个纸巾盒实物：宽高比恒定 22:8.5，木框厚度与颜色、木纹方向、玻璃面板尺寸、顶部开口形状与位置、嵌槽、抽出的纸巾形态和图案位置必须完全一致。只允许背景、道具、光线和机位变化，盒体本身的比例、尺寸和结构绝不能改变；禁止某一组盒体变高、变扁、变窄、变方、变大变小或倾斜变形，禁止换成另一款纸巾盒或另一种比例。任何一组盒体比例与其余组不一致，整组判定失败。";
+
 const materialReplacementSubjectColorRule =
   "【纸巾盒款颜色优先级】第一，如果本轮在工作台选择了色彩变量，以工作台选择的色彩搭配为主，图1和图3颜色不得覆盖所选色彩变量，只允许黑色、深灰、白色、乳白或象牙白作为轮廓和高光辅助色。第二，如果本轮没有选择工作台色彩变量且提供了图3，则以图3主体的颜色作为图案主要配色参考。第三，如果本轮没有选择工作台色彩变量且没有图3，则使用图1图案原本的色相体系和颜色分布。颜色只作用于图2目标物体表面的图案，不改变目标物体原有基底、背景、桌面、阴影或倒影颜色。";
 
@@ -2854,6 +2857,7 @@ function buildPrompt(analysis, background, angle, timeOfDay, shootingStyle, inde
     getSceneThreeImageRule(),
     "",
     getProductStructureRule(),
+    isMaterialReplacementProduct() ? tissueBoxSceneIdentityRule : "",
     "",
     getScenePlacementRule(),
     "",
@@ -2925,6 +2929,7 @@ function buildBatchPrompt() {
     getSceneSubjectLockRule(),
     getSceneThreeImageRule(),
     getProductStructureRule(),
+    isMaterialReplacementProduct() ? tissueBoxSceneIdentityRule : "",
     getScenePlacementRule(),
     isBookendProduct()
       ? "【书档七组拍摄分配】七组中固定有三组采用近景特写，分别是第1、4、6组；其余第2、3、5、7组采用正常背景商品拍摄。三组近景要保留玻璃连接、底座、木纹和书脊细节，其余四组要保留可辨认但低对比的书桌、书架或阅读角环境。"
