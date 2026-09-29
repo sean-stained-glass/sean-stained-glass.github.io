@@ -1864,6 +1864,7 @@ const elements = {
   listingTagBox: document.querySelector("#listingTagBox"),
   listingDescBox: document.querySelector("#listingDescBox"),
   listingStatus: document.querySelector("#listingStatus"),
+  rerollListingButton: document.querySelector("#rerollListingButton"),
   downloadAllButton: document.querySelector("#downloadAllButton"),
   toast: document.querySelector("#toast"),
 };
@@ -2228,40 +2229,235 @@ function renderDescription(text, status = "") {
 }
 
 let listingSubjectTimer = 0;
+let listingVariantRound = 0;
 
 const listingSubjectDictionary = {
-  龙: "Dragon",
-  独角兽: "Unicorn",
-  百合: "Lily",
-  铃兰: "Lily of the Valley",
-  樱花: "Cherry Blossom",
-  猫: "Cat",
-  黑猫: "Black Cat",
-  狐狸: "Fox",
-  狼: "Wolf",
-  蝴蝶: "Butterfly",
-  蜂鸟: "Hummingbird",
-  孔雀: "Peacock",
-  狮子: "Lion",
-  雄鹰: "Eagle",
-  乌鸦: "Raven",
-  南瓜: "Pumpkin",
-  月亮: "Moon",
-  太阳: "Sun",
-  星星: "Stars",
-  海浪: "Ocean Wave",
-  女巫: "Witch",
-  天使: "Angel",
-  雪人: "Snowman",
-  马: "Horse",
-  天鹅: "Swan",
-  兔子: "Rabbit",
-  青蛙剑士: "Frog Knight",
-  玫瑰: "Rose",
-  向日葵: "Sunflower",
-  生命之树: "Tree of Life",
-  驯鹿: "Reindeer",
-  美人鱼: "Mermaid",
+  "龙": "Dragon",
+  "中国龙": "Chinese Dragon",
+  "恐龙": "Dinosaur",
+  "霸王龙": "T-Rex",
+  "凤凰": "Phoenix",
+  "独角兽": "Unicorn",
+  "美人鱼": "Mermaid",
+  "天使": "Angel",
+  "女神": "Goddess",
+  "圣母": "Madonna",
+  "女巫": "Witch",
+  "精灵": "Elf",
+  "妖精": "Fairy",
+  "守护神": "Guardian",
+  "青蛙剑士": "Frog Knight",
+  "龙猫": "Dragon Cat",
+  "麒麟": "Qilin",
+  "狮鹫": "Griffin",
+  "巨龙": "Wyvern",
+  "海龙": "Sea Dragon",
+  "猎豹": "Cheetah",
+  "豹": "Leopard",
+  "雪豹": "Snow Leopard",
+  "老虎": "Tiger",
+  "白虎": "White Tiger",
+  "狮子": "Lion",
+  "母狮": "Lioness",
+  "大象": "Elephant",
+  "熊": "Bear",
+  "棕熊": "Brown Bear",
+  "熊猫": "Panda",
+  "北极熊": "Polar Bear",
+  "狼": "Wolf",
+  "白狼": "White Wolf",
+  "狐狸": "Fox",
+  "白狐": "White Fox",
+  "浣熊": "Raccoon",
+  "獾": "Badger",
+  "鹿": "Deer",
+  "麋鹿": "Reindeer",
+  "羚羊": "Antelope",
+  "山羊": "Goat",
+  "绵羊": "Sheep",
+  "牛": "Cow",
+  "公牛": "Bull",
+  "猪": "Pig",
+  "狗": "Dog",
+  "柯基": "Corgi",
+  "柴犬": "Shiba Inu",
+  "猫": "Cat",
+  "黑猫": "Black Cat",
+  "橘猫": "Orange Cat",
+  "兔": "Rabbit",
+  "松鼠": "Squirrel",
+  "刺猬": "Hedgehog",
+  "仓鼠": "Hamster",
+  "马": "Horse",
+  "骏马": "Horse",
+  "斑马": "Zebra",
+  "长颈鹿": "Giraffe",
+  "考拉": "Koala",
+  "袋鼠": "Kangaroo",
+  "猴子": "Monkey",
+  "大猩猩": "Gorilla",
+  "骆驼": "Camel",
+  "犀牛": "Rhino",
+  "河马": "Hippo",
+  "海豚": "Dolphin",
+  "鲸": "Whale",
+  "鲨鱼": "Shark",
+  "章鱼": "Octopus",
+  "海龟": "Sea Turtle",
+  "海马": "Seahorse",
+  "海星": "Starfish",
+  "水母": "Jellyfish",
+  "螃蟹": "Crab",
+  "贝壳": "Seashell",
+  "蜜蜂": "Bee",
+  "蝴蝶": "Butterfly",
+  "蜻蜓": "Dragonfly",
+  "瓢虫": "Ladybug",
+  "蜘蛛": "Spider",
+  "蛇": "Snake",
+  "蜥蜴": "Lizard",
+  "变色龙": "Chameleon",
+  "孔雀": "Peacock",
+  "天鹅": "Swan",
+  "仙鹤": "Crane",
+  "猫头鹰": "Owl",
+  "雄鹰": "Eagle",
+  "猎鹰": "Falcon",
+  "乌鸦": "Raven",
+  "鸽子": "Dove",
+  "鹦鹉": "Parrot",
+  "火烈鸟": "Flamingo",
+  "蜂鸟": "Hummingbird",
+  "知更鸟": "Robin",
+  "麻雀": "Sparrow",
+  "企鹅": "Penguin",
+  "公鸡": "Rooster",
+  "鸭": "Duck",
+  "鹅": "Goose",
+  "青蛙": "Frog",
+  "蜗牛": "Snail",
+  "康乃馨": "Carnation",
+  "玫瑰": "Rose",
+  "百合": "Lily",
+  "铃兰": "Lily of the Valley",
+  "向日葵": "Sunflower",
+  "郁金香": "Tulip",
+  "樱花": "Cherry Blossom",
+  "梅花": "Plum Blossom",
+  "兰花": "Orchid",
+  "莲花": "Lotus",
+  "睡莲": "Water Lily",
+  "牡丹": "Peony",
+  "菊花": "Chrysanthemum",
+  "薰衣草": "Lavender",
+  "蒲公英": "Dandelion",
+  "绣球花": "Hydrangea",
+  "雏菊": "Daisy",
+  "罂粟": "Poppy",
+  "山茶花": "Camellia",
+  "木槿": "Hibiscus",
+  "紫藤": "Wisteria",
+  "满天星": "Baby's Breath",
+  "桂花": "Osmanthus",
+  "茉莉": "Jasmine",
+  "栀子花": "Gardenia",
+  "勿忘我": "Forget Me Not",
+  "三色堇": "Pansy",
+  "紫罗兰": "Violet",
+  "水仙": "Daffodil",
+  "风信子": "Hyacinth",
+  "大丽花": "Dahlia",
+  "银莲花": "Anemone",
+  "虞美人": "Corn Poppy",
+  "尤加利": "Eucalyptus",
+  "蕨类": "Fern",
+  "龟背竹": "Monstera",
+  "仙人掌": "Cactus",
+  "多肉": "Succulent",
+  "枫叶": "Maple Leaf",
+  "银杏": "Ginkgo",
+  "橡树叶": "Oak Leaf",
+  "生命之树": "Tree of Life",
+  "月桂": "Laurel",
+  "常春藤": "Ivy",
+  "三叶草": "Clover",
+  "四叶草": "Four Leaf Clover",
+  "芦苇": "Reed",
+  "小麦": "Wheat",
+  "橄榄枝": "Olive Branch",
+  "蘑菇": "Mushroom",
+  "南瓜": "Pumpkin",
+  "苹果": "Apple",
+  "樱桃": "Cherry",
+  "柠檬": "Lemon",
+  "草莓": "Strawberry",
+  "葡萄": "Grape",
+  "石榴": "Pomegranate",
+  "菠萝": "Pineapple",
+  "桃子": "Peach",
+  "梨": "Pear",
+  "平安": "Peace",
+  "幸福": "Happiness",
+  "健康": "Health",
+  "爱": "Love",
+  "希望": "Hope",
+  "幸运": "Luck",
+  "祝福": "Blessing",
+  "守护": "Protection",
+  "勇气": "Courage",
+  "成长": "Growth",
+  "自由": "Freedom",
+  "感恩": "Gratitude",
+  "友谊": "Friendship",
+  "家庭": "Family",
+  "母亲": "Mother",
+  "父亲": "Father",
+  "新生": "New Beginnings",
+  "思念": "Remembrance",
+  "梦想": "Dream",
+  "力量": "Strength",
+  "宁静": "Serenity",
+  "丰收": "Harvest",
+  "旅行": "Wanderlust",
+  "家园": "Home Sweet Home",
+  "诞生": "Birth",
+  "婚礼": "Wedding",
+  "生日": "Birthday",
+  "圣诞": "Christmas",
+  "万圣节": "Halloween",
+  "复活节": "Easter",
+  "月亮": "Moon",
+  "新月": "Crescent Moon",
+  "太阳": "Sun",
+  "星星": "Stars",
+  "银河": "Galaxy",
+  "流星": "Shooting Star",
+  "云": "Cloud",
+  "雨": "Rain",
+  "彩虹": "Rainbow",
+  "海浪": "Ocean Wave",
+  "灯塔": "Lighthouse",
+  "雪山": "Snowy Mountain",
+  "森林": "Forest",
+  "沙漠": "Desert",
+  "雪": "Snowflake",
+  "冰晶": "Ice Crystal",
+  "火焰": "Flame",
+  "蜡烛": "Candle",
+  "灯笼": "Lantern",
+  "铃铛": "Bell",
+  "沙漏": "Hourglass",
+  "指南针": "Compass",
+  "钥匙": "Key",
+  "锚": "Anchor",
+  "羽毛": "Feather",
+  "心": "Heart",
+  "无限": "Infinity",
+  "十字架": "Cross",
+  "圣殿": "Temple",
+  "城堡": "Castle",
+  "书": "Books",
+  "挂钟": "Clock"
 };
 
 function normalizeListingSubject(raw) {
@@ -2281,87 +2477,200 @@ function listingTitleCase(value) {
     .join(" ");
 }
 
-function buildListingTitles(subject) {
-  const big = listingTitleCase(subject);
-  return [
-    "【1 · SEO 搜索型】",
-    big + " Tissue Box Cover, Handmade Wooden Tissue Holder, Stained Glass Home Decor, Bathroom Tissue Box",
-    "",
-    "【2 · 主题人群型】",
-    big + " Tissue Box Cover, Handmade Wood Tissue Holder, Fantasy Home Decor, Gift for " + big + " Lovers",
-    "",
-    "【3 · 材质工艺型】",
-    "Handmade Wooden Tissue Box Cover, " + big + " Glass Art, Hand Painted Color Sprayed Glass, Wood Tissue Holder",
-    "",
-    "【4 · 高端家居型】",
-    "Handmade Wooden Tissue Box Cover, " + big + " Stained Glass Art, Unique Home Decor Piece, Handcrafted Tissue Holder",
-    "",
-    "【5 · 礼物型】",
-    big + " Tissue Box Cover Gift, Wooden Tissue Holder with Hand Painted Glass, Housewarming Gift for Home Decor Lovers",
-  ].join("\n");
+function listingHash(value) {
+  const text = String(value || "");
+  let hash = 2166136261;
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }
 
-function buildListingTags(subject) {
+function listingSeed(subject) {
+  return listingHash(subject + "#" + listingVariantRound);
+}
+
+function pickListingVariant(list, seed, offset) {
+  if (!Array.isArray(list) || !list.length) return "";
+  const index = (seed + offset * 11) % list.length;
+  return list[index];
+}
+
+const listingTitleVariants = {
+  seo: [
+    "{S} Tissue Box Cover, Handmade Wooden Tissue Holder, Stained Glass Home Decor, Bathroom Tissue Box",
+    "Handmade {S} Tissue Box Cover, Wooden Tissue Holder, Stained Glass Decor, Unique Bathroom Accessory",
+    "{S} Wooden Tissue Box Cover, Handmade Tissue Holder, Art Glass Home Decor, Bathroom Tissue Box",
+  ],
+  theme: [
+    "{S} Tissue Box Cover, Handmade Wood Tissue Holder, Fantasy Home Decor, Gift for {S} Lovers",
+    "{S} Lover Gift, Wooden Tissue Box Cover, Handmade Home Decor, {S} Decor for Bedroom",
+    "Handmade {S} Tissue Box Cover, {S} Lover Gift, Wooden Tissue Holder, Fantasy Home Decor",
+  ],
+  craft: [
+    "Handmade Wooden Tissue Box Cover, {S} Glass Art, Hand Painted Color Sprayed Glass, Wood Tissue Holder",
+    "{S} Art Glass Tissue Box Cover, Hand Painted Glass Panel, Solid Wood Frame, Handcrafted Decor",
+    "Color Sprayed Glass Tissue Box Cover, {S} Design, Handmade Wooden Frame, Art Glass Home Decor",
+  ],
+  premium: [
+    "Handmade Wooden Tissue Box Cover, {S} Stained Glass Art, Unique Home Decor Piece, Handcrafted Tissue Holder",
+    "{S} Stained Glass Tissue Box Cover, Wooden Art Piece, Unique Home Decor, Handmade Gift",
+    "Art Glass Tissue Box Cover, {S} Design, Handcrafted Wooden Frame, Unique Home Decor Accent",
+  ],
+  gift: [
+    "{S} Tissue Box Cover Gift, Wooden Tissue Holder with Hand Painted Glass, Housewarming Gift for Home Decor Lovers",
+    "Handmade {S} Tissue Box Cover, Wooden Tissue Holder, Housewarming Gift, Birthday Gift for Home Decor Fans",
+    "{S} Tissue Box Cover, Hand Painted Glass Gift, Wooden Tissue Holder, Unique Housewarming Present",
+  ],
+};
+
+function buildListingTitles(subject, seed) {
+  const big = listingTitleCase(subject);
+  const fill = (template) => String(template).split("{S}").join(big);
+  const rows = [
+    ["【1 · SEO 搜索型】", "seo"],
+    ["【2 · 主题人群型】", "theme"],
+    ["【3 · 材质工艺型】", "craft"],
+    ["【4 · 高端家居型】", "premium"],
+    ["【5 · 礼物型】", "gift"],
+  ];
+  const out = [];
+  rows.forEach((row, index) => {
+    out.push(row[0]);
+    out.push(fill(pickListingVariant(listingTitleVariants[row[1]], seed, index * 3 + 1)));
+    out.push("");
+  });
+  return out.join("\n").trim();
+}
+
+function buildListingTags(subject, seed) {
   const lower = subject.toLowerCase();
   const short = lower.length > 10 ? lower.split(" ")[0] : lower;
-  const candidates = [
+  const pool = [
     short + " tissue box",
     short + " home decor",
+    short + " gift",
+    short + " lover gift",
     "wood tissue holder",
     "tissue box cover",
     "stained glass decor",
     "hand painted glass",
+    "color sprayed glass",
     "handmade home decor",
     "wooden tissue box",
+    "wood home decor",
     "bathroom decor",
     "bedroom decor",
     "office desk decor",
+    "living room decor",
     "unique gift idea",
     "housewarming gift",
+    "birthday gift",
     "glass art gift",
     "colorful home decor",
     "handmade wood gift",
+    "tissue box holder",
+    "decorative tissue box",
+    "art glass decor",
+    "handcrafted gift",
+    "gift for her",
+    "gift for him",
+    "home decor gift",
+    "glass home decor",
   ];
-  const tags = [];
-  for (const tag of candidates) {
+  const cleaned = [];
+  for (const tag of pool) {
     const clean = tag.replace(/\s+/g, " ").trim().toLowerCase();
     if (!clean || clean.length > 20) continue;
-    if (tags.includes(clean)) continue;
-    tags.push(clean);
-    if (tags.length === 13) break;
+    if (cleaned.includes(clean)) continue;
+    cleaned.push(clean);
   }
-  return tags.join("\n");
+  const picked = [];
+  for (let step = 0; step < cleaned.length && picked.length < 13; step += 1) {
+    const item = cleaned[(seed + step * 3) % cleaned.length];
+    if (!picked.includes(item)) picked.push(item);
+  }
+  for (let step = 0; step < cleaned.length && picked.length < 13; step += 1) {
+    if (!picked.includes(cleaned[step])) picked.push(cleaned[step]);
+  }
+  return picked.slice(0, 13).join("\n");
 }
 
-function buildListingDescription(subject) {
+const listingDescVariants = {
+  headline: [
+    "✨ Handmade {S} Tissue Box Cover with Color-Sprayed Glass & Wood Design ✨",
+    "✨ {S} Tissue Box Cover — Hand Painted Glass in a Handmade Wood Frame ✨",
+    "✨ Handcrafted {S} Tissue Box Cover with Art Glass Panel & Natural Wood ✨",
+  ],
+  intro: [
+    "Bring a little charm and warmth into your home with this handmade {s} tissue box cover. ✨ Combining hand-painted, color-sprayed glass artwork with a solid wooden frame, it works as both a practical household item and a decorative statement for your space. 🏡🫶",
+    "This handmade {s} tissue box cover turns an everyday object into a small piece of art. ✨ Color-sprayed glass artwork meets a handcrafted wooden frame, so it looks beautiful on a shelf while still doing its daily job. 🧻💛",
+    "Add a touch of color and character to your space with this handmade {s} tissue box cover. ✨ Each glass panel is painted and color sprayed by hand, then set into a solid wooden frame that warms up any room. 🪵🎨",
+  ],
+  craft: [
+    "The front panel features a colorful {s}-inspired glass design, created with a hand-painted, color-sprayed glass technique that builds rich, layered tones and a beautiful interplay of light and color. Every panel is finished by hand, so each piece has its own unique character. ✨🪟",
+    "The glass panel is painted and color sprayed by hand, layer by layer, giving the {s} design deep, saturated color that shifts with the light. Because every panel is finished individually, small differences are part of the handmade charm. 🎨✨",
+    "Hand-painted and color-sprayed glass gives the {s} artwork its vivid tones and soft glow. The technique keeps colors rich and even while leaving the handcrafted brushwork visible, so no two pieces look exactly the same. 🌈🖌️",
+  ],
+  wood: [
+    "The frame is cut, sanded, and assembled by hand. The natural wood grain adds warmth and texture, protects the tissue box inside, and pairs beautifully with modern, rustic, vintage, and fantasy-inspired interiors. 🪵🤎",
+    "Solid wood is cut, sanded and finished by hand, then assembled around the glass panel. The natural grain brings warmth to the piece and protects the tissues inside — it suits modern, rustic, vintage and cottage-style rooms alike. 🌳🤎",
+    "A handcrafted wooden frame holds the glass panel securely. Sanded smooth and finished by hand, the wood shows its natural grain and adds a warm, tactile contrast to the colorful glass. 🪵🌿",
+  ],
+  practical: [
+    "Made to hold a standard tissue box while keeping tissues neat and easy to pull. 🧻 Place it on a bathroom counter, bedroom nightstand, living room table, office desk, or entryway console — it turns an everyday item into a decorative feature. 🏡🫶",
+    "Designed to fit a standard tissue box, with easy access so tissues pull out smoothly. 🧻 Use it on a bathroom vanity, a nightstand, a coffee table, a desk or an entryway console — practical, but pretty enough to leave on display. 🏡✨",
+    "Fits standard tissue boxes and keeps them tidy, dust-free and easy to reach. 🧻 A simple way to dress up a bathroom counter, bedside table, living room shelf, office desk or hallway console. 🫶🏡",
+  ],
+  gift: [
+    "With colorful glass art, warm wood, and handcrafted details, this {s} tissue box cover makes a cheerful gift for {s} lovers, home decor fans, housewarming parties, birthdays, and holidays. 🎁✨",
+    "Looking for a gift that is useful and unusual? 🎁 Hand painted glass and warm wood make this {s} tissue box cover a lovely present for {s} lovers, new homeowners, birthdays, Mother's Day or Christmas. 💛✨",
+    "Handmade, practical and full of character — this {s} tissue box cover is an easy gift for {s} fans, housewarming parties, birthdays, anniversaries, or anyone who loves colorful home decor. 🎀🫶",
+  ],
+  process: [
+    "AI is used only as a source of creative inspiration. Every design is personally revised, refined, and hand-painted by me on real glass. Each piece is individually crafted — never mass-produced and never sold as an AI-only finished product. 🎨🖌️",
+    "Every design starts as an idea, then is redrawn, refined and hand painted by me on real glass — AI is used only for early inspiration. Each piece is made individually, so it is never a mass-produced or AI-only product. 💛🖌️",
+  ],
+  closing: [
+    "🌟 More Than a Tissue Box — It's a Little Piece of Art for Your Home. 🌟",
+    "🌟 A Small Handmade Piece That Makes Everyday Moments Brighter. 🌟",
+    "🌟 Functional, Colorful and Made by Hand — Just for Your Home. 🌟",
+  ],
+  bullets: [
+    "🪵 Handmade Wood Frame\n🎨 Hand-Painted Color-Sprayed Glass\n🧻 Everyday Functionality\n🏡 Home Decor Accent\n🎁 Unique Gift Idea",
+    "🎨 Hand Painted Glass Panel\n🌳 Natural Wood Grain\n🫶 Practical Everyday Use\n✨ One-of-a-Kind Details\n🎁 Ready to Gift",
+    "🪵 Solid Wood Construction\n🌈 Color Sprayed Glass Art\n🧻 Fits Standard Tissue Boxes\n🏡 Bathroom, Bedroom or Desk\n💛 Handmade with Care",
+  ],
+};
+
+function buildListingDescription(subject, seed) {
   const big = listingTitleCase(subject);
   const lower = subject.toLowerCase();
+  const fill = (template) => String(template).split("{S}").join(big).split("{s}").join(lower);
+  const part = (key, offset) => fill(pickListingVariant(listingDescVariants[key], seed, offset + 5));
   return [
-    "✨ Handmade " + big + " Tissue Box Cover with Color-Sprayed Glass & Wood Design ✨",
+    part("headline", 0),
     "",
-    "Bring a little charm and warmth into your home with this handmade " + lower + " tissue box cover. ✨ Combining hand-painted, color-sprayed glass artwork with a solid wooden frame, it works as both a practical household item and a decorative statement for your space. 🏡🫶",
+    part("intro", 1),
     "",
     "🎨 Color-Sprayed Glass Artwork",
-    "The front panel features a colorful " + lower + "-inspired glass design, created with a hand-painted, color-sprayed glass technique that builds rich, layered tones and a beautiful interplay of light and color. Every panel is finished by hand, so each piece has its own unique character. ✨🪟",
+    part("craft", 2),
     "",
     "🪵 Natural Wood Craftsmanship",
-    "The frame is cut, sanded, and assembled by hand. The natural wood grain adds warmth and texture, protects the tissue box inside, and pairs beautifully with modern, rustic, vintage, and fantasy-inspired interiors. 🪵🤎",
+    part("wood", 3),
     "",
     "🧻 Beautiful & Practical",
-    "Made to hold a standard tissue box while keeping tissues neat and easy to pull. 🧻 Place it on a bathroom counter, bedroom nightstand, living room table, office desk, or entryway console — it turns an everyday item into a decorative feature. 🏡🫶",
+    part("practical", 4),
     "",
     "🎁 A Fun Gift Idea",
-    "With colorful glass art, warm wood, and handcrafted details, this " + lower + " tissue box cover makes a cheerful gift for " + lower + " lovers, home decor fans, housewarming parties, birthdays, and holidays. 🎁✨",
+    part("gift", 5),
     "",
     "💛 Creation Process",
-    "AI is used only as a source of creative inspiration. Every design is personally revised, refined, and hand-painted by me on real glass. Each piece is individually crafted — never mass-produced and never sold as an AI-only finished product. 🎨🖌️",
+    part("process", 6),
     "",
-    "🌟 More Than a Tissue Box — It's a Little Piece of Art for Your Home. 🌟",
-    "🪵 Handmade Wood Frame",
-    "🎨 Hand-Painted Color-Sprayed Glass",
-    "🧻 Everyday Functionality",
-    "🏡 Home Decor Accent",
-    "🎁 Unique Gift Idea",
+    part("closing", 7),
+    part("bullets", 8),
   ].join("\n");
 }
 
@@ -2373,20 +2682,34 @@ function renderListingKit({ announce = true } = {}) {
     elements.listingTagBox.value = "";
     elements.listingDescBox.value = "";
     if (elements.listingStatus) {
-      elements.listingStatus.textContent = "先输入主体名称（例如 龙、独角兽、百合，也可以直接写 Dragon），再点“生成文案”。";
+      elements.listingStatus.textContent = "先输入主体名称（例如 猎豹、康乃馨、平安，也可以直接写 Cheetah），再点“生成文案”。";
     }
     return false;
   }
-  elements.listingTitleBox.value = buildListingTitles(subject);
-  elements.listingTagBox.value = buildListingTags(subject);
-  elements.listingDescBox.value = buildListingDescription(subject);
+  const seed = listingSeed(subject);
+  elements.listingTitleBox.value = buildListingTitles(subject, seed);
+  elements.listingTagBox.value = buildListingTags(subject, seed);
+  elements.listingDescBox.value = buildListingDescription(subject, seed);
   if (elements.listingStatus) {
     elements.listingStatus.textContent =
-      "已生成 " + subject + "：5 个标题 / 13 个 Tag / 1 段描述（含玻璃彩喷与木制工艺、实用性、活泼小图案）。";
+      "已生成 " + subject + "：5 个标题 / 13 个 Tag / 1 段描述（第 " + (listingVariantRound + 1) +
+      " 版说法，含玻璃彩喷与木制工艺、实用性、活泼小图案）。不满意可以点“换一批”。";
   }
   if (announce) showToast("已生成 " + subject + " 的上架文案");
   return true;
 }
+
+function rerollListingKit() {
+  listingVariantRound += 1;
+  if (listingVariantRound > 29) listingVariantRound = 0;
+  if (!elements.listingSubjectInput || !String(elements.listingSubjectInput.value || "").trim()) {
+    showToast("先输入主体名称");
+    return;
+  }
+  renderListingKit({ announce: false });
+  showToast("已换一批说法（第 " + (listingVariantRound + 1) + " 版）");
+}
+
 
 function optimizedImageDataUrl(image) {
   const maxDimension = 1600;
@@ -4484,6 +4807,11 @@ function bindEvents() {
       ].join("\n");
       await navigator.clipboard.writeText(content);
       showToast("标题、Tag、商品描述已复制");
+    });
+  }
+  if (elements.rerollListingButton) {
+    elements.rerollListingButton.addEventListener("click", () => {
+      rerollListingKit();
     });
   }
   if (elements.listingSubjectInput) {
