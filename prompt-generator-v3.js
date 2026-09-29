@@ -2499,8 +2499,8 @@ function pickListingVariant(list, seed, offset) {
 
 const listingTitleVariants = {
   seo: [
-    "{S} Tissue Box Cover, Handmade Wooden Tissue Holder, Stained Glass Home Decor, Bathroom Tissue Box",
-    "Handmade {S} Tissue Box Cover, Wooden Tissue Holder, Stained Glass Decor, Unique Bathroom Accessory",
+    "{S} Tissue Box Cover, Handmade Wooden Tissue Holder, Hand Painted Glass Home Decor, Bathroom Tissue Box",
+    "Handmade {S} Tissue Box Cover, Wooden Tissue Holder, Art Glass Decor, Unique Bathroom Accessory",
     "{S} Wooden Tissue Box Cover, Handmade Tissue Holder, Art Glass Home Decor, Bathroom Tissue Box",
   ],
   theme: [
@@ -2514,8 +2514,8 @@ const listingTitleVariants = {
     "Color Sprayed Glass Tissue Box Cover, {S} Design, Handmade Wooden Frame, Art Glass Home Decor",
   ],
   premium: [
-    "Handmade Wooden Tissue Box Cover, {S} Stained Glass Art, Unique Home Decor Piece, Handcrafted Tissue Holder",
-    "{S} Stained Glass Tissue Box Cover, Wooden Art Piece, Unique Home Decor, Handmade Gift",
+    "Handmade Wooden Tissue Box Cover, {S} Art Glass Design, Unique Home Decor Piece, Handcrafted Tissue Holder",
+    "{S} Art Glass Tissue Box Cover, Wooden Art Piece, Unique Home Decor, Handmade Gift",
     "Art Glass Tissue Box Cover, {S} Design, Handcrafted Wooden Frame, Unique Home Decor Accent",
   ],
   gift: [
@@ -2554,7 +2554,7 @@ function buildListingTags(subject, seed) {
     short + " lover gift",
     "wood tissue holder",
     "tissue box cover",
-    "stained glass decor",
+    "glass panel decor",
     "hand painted glass",
     "color sprayed glass",
     "handmade home decor",
