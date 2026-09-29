@@ -1857,6 +1857,13 @@ const elements = {
   regenerateCopyButton: document.querySelector("#regenerateCopyButton"),
   copyDescriptionButton: document.querySelector("#copyDescriptionButton"),
   copySubjectInput: document.querySelector("#copySubjectInput"),
+  listingSubjectInput: document.querySelector("#listingSubjectInput"),
+  generateListingButton: document.querySelector("#generateListingButton"),
+  copyListingButton: document.querySelector("#copyListingButton"),
+  listingTitleBox: document.querySelector("#listingTitleBox"),
+  listingTagBox: document.querySelector("#listingTagBox"),
+  listingDescBox: document.querySelector("#listingDescBox"),
+  listingStatus: document.querySelector("#listingStatus"),
   downloadAllButton: document.querySelector("#downloadAllButton"),
   toast: document.querySelector("#toast"),
 };
@@ -2218,6 +2225,167 @@ function renderDescription(text, status = "") {
   elements.copyStatus.textContent = status;
   elements.regenerateCopyButton.disabled = !currentAnalysis;
   elements.copyDescriptionButton.disabled = !currentDescription;
+}
+
+let listingSubjectTimer = 0;
+
+const listingSubjectDictionary = {
+  龙: "Dragon",
+  独角兽: "Unicorn",
+  百合: "Lily",
+  铃兰: "Lily of the Valley",
+  樱花: "Cherry Blossom",
+  猫: "Cat",
+  黑猫: "Black Cat",
+  狐狸: "Fox",
+  狼: "Wolf",
+  蝴蝶: "Butterfly",
+  蜂鸟: "Hummingbird",
+  孔雀: "Peacock",
+  狮子: "Lion",
+  雄鹰: "Eagle",
+  乌鸦: "Raven",
+  南瓜: "Pumpkin",
+  月亮: "Moon",
+  太阳: "Sun",
+  星星: "Stars",
+  海浪: "Ocean Wave",
+  女巫: "Witch",
+  天使: "Angel",
+  雪人: "Snowman",
+  马: "Horse",
+  天鹅: "Swan",
+  兔子: "Rabbit",
+  青蛙剑士: "Frog Knight",
+  玫瑰: "Rose",
+  向日葵: "Sunflower",
+  生命之树: "Tree of Life",
+  驯鹿: "Reindeer",
+  美人鱼: "Mermaid",
+};
+
+function normalizeListingSubject(raw) {
+  const text = String(raw || "").trim();
+  if (!text) return "";
+  const parts = text.split(/[|｜/]/).map((part) => part.trim()).filter(Boolean);
+  const ascii = parts.find((part) => /^[\x20-\x7E]+$/.test(part));
+  if (ascii) return ascii.replace(/\s+/g, " ");
+  return listingSubjectDictionary[text] || text;
+}
+
+function listingTitleCase(value) {
+  return String(value || "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function buildListingTitles(subject) {
+  const big = listingTitleCase(subject);
+  return [
+    "【1 · SEO 搜索型】",
+    big + " Tissue Box Cover, Handmade Wooden Tissue Holder, Stained Glass Home Decor, Bathroom Tissue Box",
+    "",
+    "【2 · 主题人群型】",
+    big + " Tissue Box Cover, Handmade Wood Tissue Holder, Fantasy Home Decor, Gift for " + big + " Lovers",
+    "",
+    "【3 · 材质工艺型】",
+    "Handmade Wooden Tissue Box Cover, " + big + " Glass Art, Hand Painted Color Sprayed Glass, Wood Tissue Holder",
+    "",
+    "【4 · 高端家居型】",
+    "Handmade Wooden Tissue Box Cover, " + big + " Stained Glass Art, Unique Home Decor Piece, Handcrafted Tissue Holder",
+    "",
+    "【5 · 礼物型】",
+    big + " Tissue Box Cover Gift, Wooden Tissue Holder with Hand Painted Glass, Housewarming Gift for Home Decor Lovers",
+  ].join("\n");
+}
+
+function buildListingTags(subject) {
+  const lower = subject.toLowerCase();
+  const short = lower.length > 10 ? lower.split(" ")[0] : lower;
+  const candidates = [
+    short + " tissue box",
+    short + " home decor",
+    "wood tissue holder",
+    "tissue box cover",
+    "stained glass decor",
+    "hand painted glass",
+    "handmade home decor",
+    "wooden tissue box",
+    "bathroom decor",
+    "bedroom decor",
+    "office desk decor",
+    "unique gift idea",
+    "housewarming gift",
+    "glass art gift",
+    "colorful home decor",
+    "handmade wood gift",
+  ];
+  const tags = [];
+  for (const tag of candidates) {
+    const clean = tag.replace(/\s+/g, " ").trim().toLowerCase();
+    if (!clean || clean.length > 20) continue;
+    if (tags.includes(clean)) continue;
+    tags.push(clean);
+    if (tags.length === 13) break;
+  }
+  return tags.join("\n");
+}
+
+function buildListingDescription(subject) {
+  const big = listingTitleCase(subject);
+  const lower = subject.toLowerCase();
+  return [
+    "✨ Handmade " + big + " Tissue Box Cover with Color-Sprayed Glass & Wood Design ✨",
+    "",
+    "Bring a little charm and warmth into your home with this handmade " + lower + " tissue box cover. ✨ Combining hand-painted, color-sprayed glass artwork with a solid wooden frame, it works as both a practical household item and a decorative statement for your space. 🏡🫶",
+    "",
+    "🎨 Color-Sprayed Glass Artwork",
+    "The front panel features a colorful " + lower + "-inspired glass design, created with a hand-painted, color-sprayed glass technique that builds rich, layered tones and a beautiful interplay of light and color. Every panel is finished by hand, so each piece has its own unique character. ✨🪟",
+    "",
+    "🪵 Natural Wood Craftsmanship",
+    "The frame is cut, sanded, and assembled by hand. The natural wood grain adds warmth and texture, protects the tissue box inside, and pairs beautifully with modern, rustic, vintage, and fantasy-inspired interiors. 🪵🤎",
+    "",
+    "🧻 Beautiful & Practical",
+    "Made to hold a standard tissue box while keeping tissues neat and easy to pull. 🧻 Place it on a bathroom counter, bedroom nightstand, living room table, office desk, or entryway console — it turns an everyday item into a decorative feature. 🏡🫶",
+    "",
+    "🎁 A Fun Gift Idea",
+    "With colorful glass art, warm wood, and handcrafted details, this " + lower + " tissue box cover makes a cheerful gift for " + lower + " lovers, home decor fans, housewarming parties, birthdays, and holidays. 🎁✨",
+    "",
+    "💛 Creation Process",
+    "AI is used only as a source of creative inspiration. Every design is personally revised, refined, and hand-painted by me on real glass. Each piece is individually crafted — never mass-produced and never sold as an AI-only finished product. 🎨🖌️",
+    "",
+    "🌟 More Than a Tissue Box — It's a Little Piece of Art for Your Home. 🌟",
+    "🪵 Handmade Wood Frame",
+    "🎨 Hand-Painted Color-Sprayed Glass",
+    "🧻 Everyday Functionality",
+    "🏡 Home Decor Accent",
+    "🎁 Unique Gift Idea",
+  ].join("\n");
+}
+
+function renderListingKit({ announce = true } = {}) {
+  if (!elements.listingSubjectInput || !elements.listingTitleBox) return false;
+  const subject = normalizeListingSubject(elements.listingSubjectInput.value);
+  if (!subject) {
+    elements.listingTitleBox.value = "";
+    elements.listingTagBox.value = "";
+    elements.listingDescBox.value = "";
+    if (elements.listingStatus) {
+      elements.listingStatus.textContent = "先输入主体名称（例如 龙、独角兽、百合，也可以直接写 Dragon），再点“生成文案”。";
+    }
+    return false;
+  }
+  elements.listingTitleBox.value = buildListingTitles(subject);
+  elements.listingTagBox.value = buildListingTags(subject);
+  elements.listingDescBox.value = buildListingDescription(subject);
+  if (elements.listingStatus) {
+    elements.listingStatus.textContent =
+      "已生成 " + subject + "：5 个标题 / 13 个 Tag / 1 段描述（含玻璃彩喷与木制工艺、实用性、活泼小图案）。";
+  }
+  if (announce) showToast("已生成 " + subject + " 的上架文案");
+  return true;
 }
 
 function optimizedImageDataUrl(image) {
@@ -4296,6 +4464,40 @@ function bindEvents() {
       );
     }, 350);
   });
+  if (elements.generateListingButton) {
+    elements.generateListingButton.addEventListener("click", () => {
+      renderListingKit();
+    });
+  }
+  if (elements.copyListingButton) {
+    elements.copyListingButton.addEventListener("click", async () => {
+      if (!renderListingKit({ announce: false })) return;
+      const content = [
+        "【标题库】",
+        elements.listingTitleBox.value.trim(),
+        "",
+        "【Tag 词库（13 个）】",
+        elements.listingTagBox.value.trim(),
+        "",
+        "【商品描述】",
+        elements.listingDescBox.value.trim(),
+      ].join("\n");
+      await navigator.clipboard.writeText(content);
+      showToast("标题、Tag、商品描述已复制");
+    });
+  }
+  if (elements.listingSubjectInput) {
+    elements.listingSubjectInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        renderListingKit();
+      }
+    });
+    elements.listingSubjectInput.addEventListener("input", () => {
+      window.clearTimeout(listingSubjectTimer);
+      listingSubjectTimer = window.setTimeout(() => renderListingKit({ announce: false }), 400);
+    });
+  }
   elements.downloadAllButton.addEventListener("click", () => {
     if (!currentResults.length) return;
     const content = buildBatchPrompt();
