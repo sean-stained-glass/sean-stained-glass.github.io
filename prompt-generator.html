@@ -467,11 +467,33 @@
             ></textarea>
           </label>
         </div>
+        <div class="description-toolbar">
+          <label class="field-group copy-subject-field">
+            <span>关键词审核（+ 接受 / − 拒绝，可写原因）</span>
+            <textarea
+              class="description-textarea"
+              id="listingReviewBox"
+              aria-label="关键词审核"
+              placeholder="+ leopard decor&#10;- unique home decor | too generic"
+            ></textarea>
+          </label>
+          <div class="result-actions">
+            <button class="button button-secondary" id="listingReviewButton" type="button">
+              记录审核
+            </button>
+            <button class="button button-secondary" id="listingExportButton" type="button">
+              导出学习记录
+            </button>
+          </div>
+          <p class="description-status" id="listingReviewStatus">
+            这里记录你的判断（+ 接受 / − 拒绝），下一次生成立刻生效；积累后用「导出学习记录」发给我，我合并进仓库。
+          </p>
+        </div>
       </section>
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="./portfolio-collage.js?v=20260921-collage-2"></script>
-    <script src="./prompt-generator-v3.js?v=20260929-listingkit-3"></script>
+    <script src="./prompt-generator-v3.js?v=20260930-listingkit-4"></script>
   </body>
 </html>
