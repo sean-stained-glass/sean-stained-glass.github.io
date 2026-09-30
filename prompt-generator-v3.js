@@ -1865,6 +1865,10 @@ const elements = {
   listingDescBox: document.querySelector("#listingDescBox"),
   listingStatus: document.querySelector("#listingStatus"),
   rerollListingButton: document.querySelector("#rerollListingButton"),
+  listingReviewBox: document.querySelector("#listingReviewBox"),
+  listingReviewButton: document.querySelector("#listingReviewButton"),
+  listingExportButton: document.querySelector("#listingExportButton"),
+  listingReviewStatus: document.querySelector("#listingReviewStatus"),
   downloadAllButton: document.querySelector("#downloadAllButton"),
   toast: document.querySelector("#toast"),
 };
@@ -2544,55 +2548,172 @@ function buildListingTitles(subject, seed) {
   return out.join("\n").trim();
 }
 
+function listingReviewState() {
+  try {
+    const raw = window.localStorage.getItem("etsyLearningLog");
+    if (!raw) return { accepted: [], rejected: [], reasons: {} };
+    const parsed = JSON.parse(raw);
+    return {
+      accepted: Array.isArray(parsed.accepted) ? parsed.accepted : [],
+      rejected: Array.isArray(parsed.rejected) ? parsed.rejected : [],
+      reasons: parsed.reasons && typeof parsed.reasons === "object" ? parsed.reasons : {},
+    };
+  } catch (error) {
+    return { accepted: [], rejected: [], reasons: {} };
+  }
+}
+
+function listingSaveReviewState(state) {
+  try {
+    window.localStorage.setItem("etsyLearningLog", JSON.stringify(state));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function listingAppendReview(entries) {
+  const state = listingReviewState();
+  const acceptedSet = new Set(state.accepted.map((item) => String(item).toLowerCase()));
+  const rejectedSet = new Set(state.rejected.map((item) => String(item).toLowerCase()));
+  const today = new Date().toISOString().slice(0, 10);
+  let changed = 0;
+  for (const entry of entries) {
+    const tag = String(entry.tag || "").replace(/\s+/g, " ").trim().toLowerCase();
+    if (!tag || tag.length > 20) continue;
+    if (entry.status === "accepted") {
+      state.rejected = state.rejected.filter((item) => String(item).toLowerCase() !== tag);
+      rejectedSet.delete(tag);
+      if (!acceptedSet.has(tag)) {
+        acceptedSet.add(tag);
+        state.accepted.push(tag);
+        changed += 1;
+      }
+    } else {
+      state.accepted = state.accepted.filter((item) => String(item).toLowerCase() !== tag);
+      acceptedSet.delete(tag);
+      if (!rejectedSet.has(tag)) {
+        rejectedSet.add(tag);
+        state.rejected.push(tag);
+        changed += 1;
+      }
+    }
+    if (entry.reason) state.reasons[tag] = entry.reason;
+  }
+  state.updated = today;
+  listingSaveReviewState(state);
+  return { changed, state };
+}
+
+function parseListingReview(text) {
+  const out = [];
+  String(text || "").split(/\r?\n/).forEach((line) => {
+    const raw = line.trim();
+    if (!raw) return;
+    const match = raw.match(/^([+\-＋－])\s*(.+)$/);
+    if (!match) return;
+    const parts = match[2].split("|");
+    const tag = parts[0].trim();
+    const reason = parts.slice(1).join("|").trim();
+    out.push({
+      status: match[1] === "+" || match[1] === "＋" ? "accepted" : "rejected",
+      tag,
+      reason,
+    });
+  });
+  return out;
+}
+
+const listingKnowledgeKeywords = [
+  { k: "tissue box cover", t: "product", c: "high" },
+  { k: "wood tissue holder", t: "product", c: "high" },
+  { k: "tissue box holder", t: "product", c: "high" },
+  { k: "decorative tissue box", t: "product", c: "medium" },
+  { k: "bathroom tissue box", t: "product", c: "medium" },
+  { k: "hand painted glass", t: "craft", c: "high" },
+  { k: "color sprayed glass", t: "craft", c: "high" },
+  { k: "art glass", t: "craft", c: "high" },
+  { k: "glass panel art", t: "craft", c: "medium" },
+  { k: "handcrafted home decor", t: "craft", c: "high" },
+  { k: "handmade home decor", t: "craft", c: "high" },
+  { k: "wooden frame", t: "material", c: "medium" },
+  { k: "solid wood", t: "material", c: "medium" },
+  { k: "wood home decor", t: "material", c: "medium" },
+  { k: "bathroom decor", t: "scene", c: "high" },
+  { k: "bedroom decor", t: "scene", c: "high" },
+  { k: "living room decor", t: "scene", c: "high" },
+  { k: "office desk decor", t: "scene", c: "medium" },
+  { k: "entryway decor", t: "scene", c: "medium" },
+  { k: "vanity decor", t: "scene", c: "medium" },
+  { k: "nightstand decor", t: "scene", c: "medium" },
+  { k: "gift for her", t: "audience", c: "high" },
+  { k: "gift for him", t: "audience", c: "medium" },
+  { k: "gift for mom", t: "audience", c: "high" },
+  { k: "home decor gift", t: "audience", c: "high" },
+  { k: "handmade gift", t: "audience", c: "medium" },
+  { k: "housewarming gift", t: "occasion", c: "high" },
+  { k: "birthday gift", t: "occasion", c: "high" },
+  { k: "christmas gift", t: "occasion", c: "high" },
+  { k: "mothers day gift", t: "occasion", c: "high" },
+  { k: "anniversary gift", t: "occasion", c: "medium" },
+  { k: "wedding gift", t: "occasion", c: "medium" },
+  { k: "new home gift", t: "occasion", c: "medium" },
+];
+
+const listingBannedKeywords = ["stained glass"];
+
 function buildListingTags(subject, seed) {
   const lower = subject.toLowerCase();
   const short = lower.length > 10 ? lower.split(" ")[0] : lower;
-  const pool = [
-    short + " tissue box",
-    short + " home decor",
-    short + " gift",
-    short + " lover gift",
-    "wood tissue holder",
-    "tissue box cover",
-    "glass panel decor",
-    "hand painted glass",
-    "color sprayed glass",
-    "handmade home decor",
-    "wooden tissue box",
-    "wood home decor",
-    "bathroom decor",
-    "bedroom decor",
-    "office desk decor",
-    "living room decor",
-    "unique gift idea",
-    "housewarming gift",
-    "birthday gift",
-    "glass art gift",
-    "colorful home decor",
-    "handmade wood gift",
-    "tissue box holder",
-    "decorative tissue box",
-    "art glass decor",
-    "handcrafted gift",
-    "gift for her",
-    "gift for him",
-    "home decor gift",
-    "glass home decor",
-  ];
-  const cleaned = [];
-  for (const tag of pool) {
-    const clean = tag.replace(/\s+/g, " ").trim().toLowerCase();
-    if (!clean || clean.length > 20) continue;
-    if (cleaned.includes(clean)) continue;
-    cleaned.push(clean);
+  const review = listingReviewState();
+  const rejected = new Set(review.rejected.map((item) => String(item).toLowerCase()));
+  const accepted = review.accepted.map((item) => String(item).toLowerCase());
+
+  const isValid = (value) => {
+    const clean = String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
+    if (!clean || clean.length > 20) return false;
+    if (listingBannedKeywords.some((word) => clean.indexOf(word) >= 0)) return false;
+    if (rejected.has(clean)) return false;
+    return clean;
+  };
+
+  const buckets = { product: [], craft: [], material: [], scene: [], audience: [], occasion: [] };
+  [short + " tissue box", short + " home decor"].forEach((tag) => {
+    const clean = isValid(tag);
+    if (clean) buckets.product.push(clean);
+  });
+  for (const item of listingKnowledgeKeywords) {
+    const bucket = buckets[item.t];
+    if (!bucket) continue;
+    const clean = isValid(item.k);
+    if (clean && !bucket.includes(clean)) bucket.push(clean);
   }
+
+  const order = ["product", "craft", "material", "scene", "audience", "occasion"];
+  const quotas = { product: 3, craft: 3, material: 1, scene: 3, audience: 1, occasion: 2 };
   const picked = [];
-  for (let step = 0; step < cleaned.length && picked.length < 13; step += 1) {
-    const item = cleaned[(seed + step * 3) % cleaned.length];
-    if (!picked.includes(item)) picked.push(item);
+  const push = (tag) => { if (tag && picked.indexOf(tag) < 0) picked.push(tag); };
+  accepted.forEach(push);
+
+  let offset = 0;
+  for (const key of order) {
+    const list = buckets[key];
+    let used = 0;
+    for (let step = 0; step < list.length && used < quotas[key]; step += 1) {
+      const tag = list[(seed + offset + step) % list.length];
+      if (picked.indexOf(tag) >= 0) continue;
+      push(tag);
+      used += 1;
+    }
+    offset += 3;
   }
-  for (let step = 0; step < cleaned.length && picked.length < 13; step += 1) {
-    if (!picked.includes(cleaned[step])) picked.push(cleaned[step]);
+
+  const leftovers = [];
+  for (const key of order) {
+    for (const tag of buckets[key]) if (leftovers.indexOf(tag) < 0) leftovers.push(tag);
+  }
+  for (let step = 0; step < leftovers.length && picked.length < 13; step += 1) {
+    push(leftovers[(seed + step) % leftovers.length]);
   }
   return picked.slice(0, 13).join("\n");
 }
@@ -4807,6 +4928,41 @@ function bindEvents() {
       ].join("\n");
       await navigator.clipboard.writeText(content);
       showToast("标题、Tag、商品描述已复制");
+    });
+  }
+  if (elements.listingReviewButton) {
+    elements.listingReviewButton.addEventListener("click", () => {
+      const entries = parseListingReview(elements.listingReviewBox ? elements.listingReviewBox.value : "");
+      if (!entries.length) {
+        showToast("先写 + 词 或 - 词 | 原因");
+        return;
+      }
+      const result = listingAppendReview(entries);
+      const state = listingReviewState();
+      if (elements.listingReviewStatus) {
+        elements.listingReviewStatus.textContent =
+          "已记录 " + result.changed + " 条；当前接受 " + state.accepted.length +
+          " 个 / 拒绝 " + state.rejected.length + " 个，重新生成即生效。";
+      }
+      if (elements.listingReviewBox) elements.listingReviewBox.value = "";
+      renderListingKit({ announce: false });
+      showToast("审核已记录，下一次生成立即生效");
+    });
+  }
+  if (elements.listingExportButton) {
+    elements.listingExportButton.addEventListener("click", async () => {
+      const state = listingReviewState();
+      const payload = JSON.stringify({
+        exported: new Date().toISOString(),
+        accepted: state.accepted,
+        rejected: state.rejected,
+        reasons: state.reasons || {},
+      }, null, 2);
+      await navigator.clipboard.writeText(payload);
+      if (elements.listingReviewStatus) {
+        elements.listingReviewStatus.textContent = "学习记录已复制，发给 Codex 就能合并进仓库的 learning-log.json。";
+      }
+      showToast("学习记录已复制到剪贴板");
     });
   }
   if (elements.rerollListingButton) {
